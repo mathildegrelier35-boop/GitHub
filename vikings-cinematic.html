@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vikings Casinos — Plan de Communication 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+/* ════════════════════════════════════════════════════
+   RESET & VARS
+════════════════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:   #0b0b20;
+  --navy2:  #12123A;
+  --navy3:  #1a1a5e;
+  --gold:   #C9A84C;
+  --goldl:  #E8D5A3;
+  --goldb:  #FFD700;
+  --white:  #F8F7F2;
+  --muted:  rgba(248,247,242,.55);
+  --card-bg: rgba(255,255,255,.03);
+  --card-border: rgba(201,168,76,.18);
+}
+html { scroll-behavior: auto; }
+body {
+  background: var(--navy);
+  color: var(--white);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════════════════════════════
+   PARTICLES CANVAS
+════════════════════════════════════════════════════ */
+#cnv {
+  position: fixed; inset:0;
+  pointer-events:none; z-index:0;
+  width:100%; height:100%;
+}
+
+/* ════════════════════════════════════════════════════
+   PROGRESS BAR + NAV DOTS
+════════════════════════════════════════════════════ */
+#pbar {
+  position:fixed; top:0; left:0; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--goldb));
+  z-index:999; width:0%;
+  box-shadow:0 0 8px var(--gold);
+  transition: width .1s linear;
+}
+#dots {
+  position:fixed; right:20px; top:50%;
+  transform:translateY(-50%);
+  display:flex; flex-direction:column; gap:8px;
+  z-index:999;
+}
+.dot {
+  width:7px; height:7px; border-radius:50%;
+  background:rgba(201,168,76,.25);
+  cursor:pointer; transition:all .3s;
+  border:none;
+}
+.dot.on { background:var(--gold); transform:scale(1.5); box-shadow:0 0 8px var(--gold); }
+#section-label {
+  position:fixed; top:24px; left:32px;
+  font-size:11px; letter-spacing:4px; color:rgba(201,168,76,.5);
+  text-transform:uppercase; z-index:999;
+  font-family: Georgia, serif;
+}
+
+/* ════════════════════════════════════════════════════
+   ANJ BADGE
+════════════════════════════════════════════════════ */
+#anj {
+  position:fixed; top:20px; right:28px;
+  font-size:9px; color:rgba(248,247,242,.3);
+  letter-spacing:.5px; z-index:999;
+  text-align:right; line-height:1.5;
+}
+
+/* ════════════════════════════════════════════════════
+   SCENES
+════════════════════════════════════════════════════ */
+.scene {
+  position:relative;
+  width:100vw; height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.scene-inner {
+  position:relative; z-index:2;
+  width:100%; max-width:1240px;
+  padding:0 48px;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  height:100%;
+}
+
+/* grain */
+.scene::before {
+  content:''; position:absolute; inset:0;
+  background:url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23n)"/></svg>');
+  opacity:.025; pointer-events:none; z-index:1;
+}
+
+/* ═══ GRID OVERLAY ═══ */
+.grid-bg {
+  position:absolute; inset:0; z-index:0;
+  background-size:60px 60px;
+  background-image:
+    linear-gradient(to right,  rgba(201,168,76,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(201,168,76,.04) 1px, transparent 1px);
+  mask-image:radial-gradient(ellipse at center, black 0%, transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse at center, black 0%, transparent 70%);
+}
+
+/* ════════════════════════════════════════════════════
+   TYPOGRAPHY EFFECTS
+════════════════════════════════════════════════════ */
+.t-gold {
+  background:linear-gradient(180deg,var(--goldb) 0%,var(--gold) 60%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; transform:translateZ(0);
+}
+.t-silver {
+  background:linear-gradient(180deg,var(--white) 0%,rgba(248,247,242,.4) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; transform:translateZ(0);
+}
+.t-shimmer {
+  background:linear-gradient(90deg,var(--gold) 0%,var(--goldb) 50%,var(--gold) 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer { from{background-position:-200% center} to{background-position:200% center} }
+@keyframes glow { 0%,100%{filter:drop-shadow(0 0 10px rgba(201,168,76,.4))} 50%{filter:drop-shadow(0 0 30px rgba(201,168,76,.8))} }
+@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+@keyframes rotSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+/* ════════════════════════════════════════════════════
+   REUSABLE COMPONENTS
+════════════════════════════════════════════════════ */
+.tag {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:11px; letter-spacing:4px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:16px;
+}
+.tag::before { content:''; width:32px; height:1px; background:var(--gold); }
+
+.section-title {
+  font-family:Georgia,serif;
+  font-size:clamp(36px,5vw,64px);
+  line-height:1.1; margin-bottom:36px;
+  font-style:italic;
+}
+
+.card {
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:14px; padding:24px;
+  position:relative; overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.card::before {
+  content:''; position:absolute;
+  top:0; left:0; width:3px; height:100%;
+  background:linear-gradient(180deg,var(--gold),transparent);
+}
+.card:hover { border-color:rgba(201,168,76,.5); transform:translateY(-3px); }
+
+.card-num {
+  font-family:Georgia,serif;
+  font-size:clamp(32px,4vw,52px);
+  font-weight:700; display:block; margin-bottom:6px;
+}
+.card-lbl { font-size:10px; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:8px; }
+.card-title { font-family:Georgia,serif; font-size:18px; margin-bottom:8px; }
+.card-body { font-size:13px; color:var(--muted); line-height:1.65; }
+
+.stat-row { display:flex; gap:20px; flex-wrap:wrap; width:100%; }
+.stat-box {
+  flex:1; min-width:130px;
+  background:rgba(201,168,76,.07);
+  border:1px solid rgba(201,168,76,.25);
+  border-radius:12px; padding:22px 18px; text-align:center;
+}
+.stat-num {
+  font-family:Georgia,serif;
+  font-size:clamp(28px,3.5vw,44px);
+  font-weight:700; display:block; color:var(--gold);
+  text-shadow:0 0 20px rgba(201,168,76,.4);
+}
+.stat-lbl { font-size:10px; color:var(--goldl); letter-spacing:2px; text-transform:uppercase; margin-top:6px; display:block; }
+
+.callout {
+  background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.02));
+  border:1px solid rgba(201,168,76,.3);
+  border-radius:12px; padding:18px 24px; margin-top:20px;
+}
+.callout p { font-size:13px; color:rgba(248,247,242,.7); line-height:1.65; }
+.callout strong { color:var(--gold); }
+
+.sep { width:60px; height:1px; background:var(--gold); margin:0 auto 28px; opacity:.4; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 1 — COVER
+════════════════════════════════════════════════════ */
+#s1 { background:radial-gradient(ellipse at 30% 50%,#1a1a5e 0%,var(--navy) 60%,#050510 100%); }
+#s1 .scene-inner { text-align:center; gap:0; }
+
+.rune-ring {
+  width:180px; height:180px;
+  border:1px solid rgba(201,168,76,.35);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; margin-bottom:36px;
+  animation:rotSlow 25s linear infinite;
+}
+.rune-ring::before {
+  content:''; position:absolute;
+  width:160px; height:160px;
+  border:1px solid rgba(201,168,76,.15);
+  border-radius:50%;
+  animation:rotSlow 18s linear infinite reverse;
+}
+.rune-glyph {
+  font-size:72px; color:var(--gold);
+  filter:drop-shadow(0 0 24px rgba(201,168,76,.9));
+  animation:glow 4s ease-in-out infinite;
+}
+.cover-brand {
+  font-size:12px; letter-spacing:8px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:18px;
+}
+.cover-h1 {
+  font-family:Georgia,serif;
+  font-size:clamp(40px,6vw,80px);
+  font-style:italic; line-height:1.15; margin-bottom:20px;
+}
+.cover-sub {
+  font-size:14px; letter-spacing:4px; color:var(--goldl);
+  text-transform:uppercase; margin-bottom:44px;
+}
+.cover-meta {
+  display:flex; gap:28px; flex-wrap:wrap; justify-content:center;
+}
+.cm-box {
+  padding:14px 24px;
+  border:1px solid rgba(201,168,76,.25);
+  border-radius:8px;
+  background:rgba(201,168,76,.04);
+  text-align:center;
+}
+.cm-val { font-family:Georgia,serif; font-size:22px; color:var(--gold); display:block; font-weight:700; }
+.cm-lbl { font-size:10px; color:var(--goldl); letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 2 — PROBLÉMATIQUE
+════════════════════════════════════════════════════ */
+#s2 { background:var(--navy); }
+.big-q {
+  font-family:Georgia,serif;
+  font-size:clamp(22px,3vw,36px);
+  font-style:italic; line-height:1.5;
+  text-align:center; max-width:820px;
+  padding:32px 48px; position:relative;
+  margin-bottom:32px;
+}
+.big-q::before {
+  content:'"'; position:absolute;
+  top:0; left:12px; font-size:90px;
+  color:rgba(201,168,76,.15);
+  font-family:Georgia,serif; line-height:1;
+}
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; width:100%; }
+@media(max-width:768px){ .grid3,.grid2,.grid5{ grid-template-columns:1fr !important; } }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:28px; width:100%; align-items:start; }
+.grid5 { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; width:100%; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 3 — CONTEXTE
+════════════════════════════════════════════════════ */
+#s3 { background:radial-gradient(ellipse at 70% 30%,rgba(201,168,76,.04) 0%,transparent 60%),var(--navy); }
+
+/* ════════════════════════════════════════════════════
+   SCENE 4 — OBJECTIFS
+════════════════════════════════════════════════════ */
+#s4 { background:var(--navy2); }
+
+/* ════════════════════════════════════════════════════
+   SCENE 5 — PERSONAS
+════════════════════════════════════════════════════ */
+#s5 { background:var(--navy); }
+.persona {
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:16px; padding:28px;
+  transition:all .4s;
+}
+.persona:hover { border-color:rgba(201,168,76,.55); transform:translateY(-5px); box-shadow:0 20px 40px rgba(0,0,0,.5); }
+.p-avatar {
+  width:56px; height:56px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--navy2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px; margin-bottom:14px;
+  border:2px solid rgba(201,168,76,.35);
+}
+.p-badge {
+  display:inline-block; padding:4px 12px;
+  border-radius:20px; font-size:10px; letter-spacing:2px;
+  text-transform:uppercase;
+  background:rgba(201,168,76,.12);
+  color:var(--gold); border:1px solid rgba(201,168,76,.25);
+  margin-bottom:10px;
+}
+.p-name { font-family:Georgia,serif; font-size:19px; margin-bottom:8px; }
+.p-desc { font-size:13px; color:var(--muted); line-height:1.65; }
+.p-trigger { margin-top:14px; padding-top:14px; border-top:1px solid rgba(201,168,76,.12); font-size:12px; color:var(--goldl); }
+
+/* ════════════════════════════════════════════════════
+   SCENE 6 — BIG IDEA (cinématique full)
+════════════════════════════════════════════════════ */
+#s6 {
+  background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.08) 0%,transparent 60%),
+             radial-gradient(ellipse at 50% 100%,#1a1a5e 0%,transparent 70%),var(--navy);
+}
+#s6 .scene-inner { text-align:center; gap:20px; }
+.bi-eyebrow { font-size:11px; letter-spacing:5px; color:rgba(248,247,242,.4); text-transform:uppercase; }
+.bi-title {
+  font-family:Georgia,serif;
+  font-size:clamp(52px,7vw,96px);
+  font-style:italic; line-height:1.1;
+}
+.bi-sub { font-size:clamp(15px,1.5vw,19px); color:var(--muted); max-width:680px; line-height:1.75; }
+.diff-row { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:8px; }
+.diff-pill {
+  padding:8px 18px; border-radius:20px;
+  border:1px solid rgba(201,168,76,.2);
+  font-size:12px; color:var(--goldl);
+  background:rgba(201,168,76,.05);
+}
+
+/* ════════════════════════════════════════════════════
+   SCENE 7 — COPY + AIDA
+════════════════════════════════════════════════════ */
+#s7 { background:var(--navy2); }
+.aida-flow { display:flex; width:100%; gap:0; }
+.aida-step {
+  flex:1; padding:28px 18px; text-align:center;
+  position:relative; transition:all .3s;
+}
+.aida-step::after {
+  content:'▶'; position:absolute;
+  right:-10px; top:50%; transform:translateY(-50%);
+  color:var(--gold); font-size:14px; z-index:2;
+}
+.aida-step:last-child::after { display:none; }
+.aida-step:nth-child(1){ background:rgba(18,18,58,.8); border-radius:12px 0 0 12px; }
+.aida-step:nth-child(2){ background:rgba(20,20,65,.8); }
+.aida-step:nth-child(3){ background:rgba(22,22,72,.8); }
+.aida-step:nth-child(4){ background:rgba(24,24,78,.8); border-radius:0 12px 12px 0; }
+.aida-letter {
+  font-family:Georgia,serif; font-size:60px;
+  font-weight:700; color:var(--gold); line-height:1;
+  margin-bottom:6px;
+  text-shadow:0 0 20px rgba(201,168,76,.5);
+}
+.aida-label { font-size:11px; color:var(--goldl); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.aida-txt { font-size:12px; color:rgba(248,247,242,.65); line-height:1.6; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 8 — ENVELOPPES DORÉES
+════════════════════════════════════════════════════ */
+#s8 { background:var(--navy); }
+.env-icon {
+  font-size:90px;
+  filter:drop-shadow(0 0 28px rgba(201,168,76,.7));
+  animation:floatY 4s ease-in-out infinite;
+  display:block; text-align:center; margin-bottom:12px;
+}
+.step-row {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:14px 18px; border-radius:8px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(201,168,76,.1);
+  margin-bottom:10px; transition:all .3s;
+}
+.step-row:hover { background:rgba(201,168,76,.06); border-color:rgba(201,168,76,.3); }
+.step-num {
+  font-family:Georgia,serif; font-size:22px;
+  color:var(--gold); width:32px; flex-shrink:0;
+}
+.step-title { font-size:13px; font-weight:600; margin-bottom:4px; }
+.step-desc { font-size:12px; color:var(--muted); line-height:1.55; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 9 — ORDRE DES VIKINGS
+════════════════════════════════════════════════════ */
+#s9 { background:var(--navy2); }
+.grade-row {
+  display:flex; align-items:center; gap:16px;
+  padding:14px 20px; border-radius:8px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(201,168,76,.1);
+  margin-bottom:8px; transition:all .3s;
+}
+.grade-row:hover { background:rgba(201,168,76,.06); border-color:rgba(201,168,76,.3); }
+.grade-icon { font-size:22px; width:34px; text-align:center; }
+.grade-name { font-family:Georgia,serif; font-size:15px; color:var(--gold); width:150px; flex-shrink:0; }
+.grade-cond { flex:1; font-size:13px; color:rgba(248,247,242,.65); }
+.grade-reward { font-size:11px; color:var(--goldl); text-align:right; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 10 — TOURNÉE
+════════════════════════════════════════════════════ */
+#s10 { background:var(--navy); }
+.phases { display:flex; gap:0; width:100%; position:relative; margin-bottom:36px; }
+.phases::before {
+  content:''; position:absolute;
+  top:36px; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--gold),rgba(201,168,76,.15));
+}
+.phase { flex:1; text-align:center; position:relative; padding-top:72px; padding-left:8px; padding-right:8px; }
+.phase-dot {
+  position:absolute; top:26px; left:50%;
+  transform:translateX(-50%);
+  width:20px; height:20px; border-radius:50%;
+  background:var(--navy); border:2px solid var(--gold); z-index:2;
+  transition:all .3s;
+}
+.phase:hover .phase-dot { background:var(--gold); box-shadow:0 0 14px var(--gold); transform:translateX(-50%) scale(1.3); }
+.phase-num { font-size:10px; letter-spacing:2px; color:var(--gold); text-transform:uppercase; margin-bottom:4px; }
+.phase-period { font-family:Georgia,serif; font-size:15px; margin-bottom:8px; }
+.phase-desc { font-size:11px; color:var(--muted); line-height:1.5; }
+
+.mystery { display:flex; flex-direction:column; gap:8px; }
+.mday {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:10px 16px; border-radius:6px;
+  background:rgba(255,255,255,.03);
+  border-left:2px solid rgba(201,168,76,.4);
+}
+.mday-d { font-size:12px; color:var(--gold); width:34px; flex-shrink:0; font-family:Georgia,serif; }
+.mday-t { font-size:12px; color:rgba(248,247,242,.65); line-height:1.5; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 11 — NUIT DES JARLS
+════════════════════════════════════════════════════ */
+#s11 {
+  background:radial-gradient(ellipse at 50% -10%,rgba(201,168,76,.12) 0%,transparent 55%),
+             radial-gradient(ellipse at 50% 110%,#1a1a5e 0%,transparent 60%),var(--navy);
+}
+#s11 .scene-inner { text-align:center; gap:24px; }
+.jarls-icon {
+  font-size:72px;
+  filter:drop-shadow(0 0 30px rgba(201,168,76,.9));
+  animation:glow 3s ease-in-out infinite;
+}
+.jarls-title {
+  font-family:Georgia,serif;
+  font-size:clamp(42px,6vw,80px);
+  font-style:italic; line-height:1.1;
+}
+.jarls-quote {
+  font-family:Georgia,serif; font-size:clamp(18px,2vw,26px);
+  font-style:italic; color:var(--goldl);
+}
+
+/* ════════════════════════════════════════════════════
+   SCENE 12 — BUDGET
+════════════════════════════════════════════════════ */
+#s12 { background:var(--navy2); }
+.brow {
+  display:flex; align-items:center; gap:14px;
+  padding:11px 18px; border-radius:6px;
+  background:rgba(255,255,255,.03);
+  border-left:2px solid var(--gold);
+  margin-bottom:7px; transition:all .3s;
+}
+.brow:hover { background:rgba(201,168,76,.06); transform:translateX(3px); }
+.brow-label { flex:1; font-size:13px; }
+.brow-bar { width:100px; height:5px; background:rgba(255,255,255,.08); border-radius:3px; overflow:hidden; }
+.brow-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--gold),var(--goldb)); width:0; transition:width 1.5s ease; }
+.brow-amt { font-family:Georgia,serif; font-size:15px; color:var(--gold); font-weight:700; white-space:nowrap; min-width:60px; text-align:right; }
+
+/* ════════════════════════════════════════════════════
+   SCENE 13 — KPIs
+════════════════════════════════════════════════════ */
+#s13 { background:var(--navy); }
+.kpi-table { width:100%; border-collapse:collapse; font-size:13px; }
+.kpi-table th {
+  padding:11px 14px; text-align:left;
+  background:rgba(201,168,76,.1);
+  color:var(--gold); font-size:10px; letter-spacing:2px; text-transform:uppercase;
+  border-bottom:2px solid rgba(201,168,76,.25);
+}
+.kpi-table td {
+  padding:11px 14px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  color:rgba(248,247,242,.75); vertical-align:middle;
+}
+.kpi-table tr:hover td { background:rgba(201,168,76,.04); }
+.delta {
+  display:inline-block; padding:3px 8px;
+  border-radius:20px; font-size:11px; font-weight:700;
+  background:rgba(0,200,100,.12); color:#00c864;
+}
+.kpi-key {
+  font-family:Georgia,serif; font-size:15px; color:var(--gold);
+  font-weight:700;
+}
+
+/* ════════════════════════════════════════════════════
+   SCENE 14 — CONCLUSION
+════════════════════════════════════════════════════ */
+#s14 {
+  background:radial-gradient(ellipse at 50% 100%,rgba(201,168,76,.08) 0%,transparent 55%),var(--navy);
+}
+#s14 .scene-inner { text-align:center; gap:28px; }
+.vs-row { display:flex; gap:24px; align-items:center; justify-content:center; width:100%; flex-wrap:wrap; }
+.vs-card { flex:1; min-width:200px; }
+.vs-label { font-size:10px; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:12px; }
+.vs-item {
+  display:flex; align-items:center; gap:10px;
+  font-size:13px; color:var(--muted); padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.vs-item::before { content:'◆'; color:var(--gold); font-size:8px; flex-shrink:0; }
+.vs-sep { font-family:Georgia,serif; font-size:48px; color:var(--gold); opacity:.6; }
+.final-title {
+  font-family:Georgia,serif;
+  font-size:clamp(44px,6.5vw,88px);
+  font-style:italic; line-height:1.15;
+}
+.anj-footer {
+  font-size:11px; color:rgba(248,247,242,.25); line-height:1.7;
+  max-width:600px; margin-top:8px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="cnv"></canvas>
+<div id="pbar"></div>
+<div id="section-label">Vikings Casinos · 2026</div>
+<div id="anj">⚠ -18 ans · Opérateur agréé ANJ<br>09 74 75 13 13</div>
+<nav id="dots"></nav>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 1 — COVER
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s1">
+  <div class="grid-bg"></div>
+  <div class="scene-inner">
+    <div class="rune-ring s1-rune"><span class="rune-glyph">᛭</span></div>
+    <div class="cover-brand s1-brand">Vikings Casinos · Plan de Communication</div>
+    <h1 class="cover-h1 s1-h1">
+      "Une seule nuit<br><span class="t-shimmer">peut tout changer."</span>
+    </h1>
+    <div class="cover-sub s1-sub">Stratégie 2026 · Document Confidentiel</div>
+    <div class="cover-meta s1-meta">
+      <div class="cm-box"><span class="cm-val">60 000 €</span><span class="cm-lbl">Budget TTC</span></div>
+      <div class="cm-box"><span class="cm-val">11</span><span class="cm-lbl">Casinos</span></div>
+      <div class="cm-box"><span class="cm-val">Jan–Déc</span><span class="cm-lbl">Période</span></div>
+      <div class="cm-box"><span class="cm-val">+270k€</span><span class="cm-lbl">PBJ Additionnel</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 2 — PROBLÉMATIQUE
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s2">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:24px">
+    <div style="text-align:center">
+      <div class="tag s2-tag">01 · Cadre Stratégique</div>
+      <h2 class="section-title s2-title">La <span class="t-gold">Problématique</span></h2>
+      <div class="big-q s2-q">
+        Comment Vikings Casinos peut-il acquérir de nouveaux joueurs physiques dans un marché ultra-réglementé, avec <strong style="color:var(--gold)">60 000€</strong>, face à des concurrents <strong style="color:var(--gold)">dix fois plus dotés</strong> — en capitalisant sur ses actifs existants ?
+      </div>
+    </div>
+    <div class="grid3" style="width:100%">
+      <div class="card s2-c1">
+        <span style="font-size:30px;display:block;margin-bottom:12px">💰</span>
+        <div class="card-lbl">Contrainte 1</div>
+        <div class="card-title">Budget Chirurgical</div>
+        <div class="card-body">60 000€ vs 890 000€ en média traditionnel. Chaque euro doit travailler 10× plus fort que la concurrence.</div>
+      </div>
+      <div class="card s2-c2">
+        <span style="font-size:30px;display:block;margin-bottom:12px">⚖️</span>
+        <div class="card-lbl">Contrainte 2</div>
+        <div class="card-title">Cadre ANJ / GAFAM</div>
+        <div class="card-body">Remarketing interdit. Ciblage "jeux d'argent" bloqué sur Meta et Google. Les leviers classiques sont fermés.</div>
+      </div>
+      <div class="card s2-c3" style="border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)">
+        <span style="font-size:30px;display:block;margin-bottom:12px">💡</span>
+        <div class="card-lbl">L'Opportunité</div>
+        <div class="card-title">66% par bouche-à-oreille</div>
+        <div class="card-body">66% des primo-accédants arrivent via recommandation. C'est là que se trouve la réponse — transformer l'existant en levier.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 3 — CONTEXTE & DIAGNOSTIC
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s3">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:28px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s3-tag">01 · Contexte</div>
+      <h2 class="section-title s3-title">Contexte & <span class="t-gold">Diagnostic</span></h2>
+    </div>
+    <div class="stat-row s3-stats">
+      <div class="stat-box"><span class="stat-num" data-target="204">0</span><span class="stat-lbl">Casinos en France</span></div>
+      <div class="stat-box"><span class="stat-num">90M€</span><span class="stat-lbl">CA Vikings (croissance)</span></div>
+      <div class="stat-box"><span class="stat-num" data-target="50000">0</span><span class="stat-lbl">Membres BiHappy actifs</span></div>
+      <div class="stat-box"><span class="stat-num">66%</span><span class="stat-lbl">Nouveaux par cooptation</span></div>
+      <div class="stat-box"><span class="stat-num" data-target="40000">0</span><span class="stat-lbl">Membres dormants</span></div>
+    </div>
+    <div class="grid2 s3-cols">
+      <div>
+        <div class="card-lbl" style="margin-bottom:12px">Vikings aujourd'hui</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="mday"><div class="mday-d">11</div><div class="mday-t">casinos · 11 restaurants · présence depuis 1998</div></div>
+          <div class="mday"><div class="mday-d">950</div><div class="mday-t">machines à sous — activité principale</div></div>
+          <div class="mday"><div class="mday-d">2.1k</div><div class="mday-t">fans Facebook/page en moyenne · engagement 2,5%</div></div>
+          <div class="mday"><div class="mday-d">0</div><div class="mday-t">Community Manager actif · Instagram abandonné</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="card-lbl" style="margin-bottom:12px">La Concurrence</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="mday"><div class="mday-d" style="color:var(--muted)">518M</div><div class="mday-t"><strong style="color:var(--white)">Barrière</strong> — vend le luxe</div></div>
+          <div class="mday"><div class="mday-d" style="color:var(--muted)">563M</div><div class="mday-t"><strong style="color:var(--white)">Partouche</strong> — vend le volume</div></div>
+          <div class="mday"><div class="mday-d" style="color:var(--muted)">315M</div><div class="mday-t"><strong style="color:var(--white)">JOA</strong> — vend la jeunesse</div></div>
+          <div class="mday"><div class="mday-d" style="color:var(--muted)">202M</div><div class="mday-t"><strong style="color:var(--white)">Tranchant</strong> — vend le jeu pur</div></div>
+        </div>
+        <div class="callout" style="margin-top:16px">
+          <p><strong>Vikings vend une histoire dont vous êtes le héros.</strong> Aucun concurrent ne dit ça. Aucun. Le bar créatif est très bas — c'est notre opportunité.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 4 — OBJECTIFS SMART
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s4">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:28px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s4-tag">02 · Objectifs</div>
+      <h2 class="section-title s4-title">5 Objectifs <span class="t-gold">SMART</span></h2>
+    </div>
+    <div class="grid5 s4-cards">
+      <div class="card s4-o1">
+        <span style="font-size:28px;display:block;margin-bottom:10px">🎯</span>
+        <div class="card-lbl">Objectif 1</div>
+        <div class="card-title">Acquisition</div>
+        <span class="card-num t-gold">+15%</span>
+        <div class="card-body">+500 nouveaux inscrits BiHappy par casino · 42/mois · mesuré trimestriellement</div>
+      </div>
+      <div class="card s4-o2">
+        <span style="font-size:28px;display:block;margin-bottom:10px">⚔️</span>
+        <div class="card-lbl">Objectif 2</div>
+        <div class="card-title">Ambassadeur</div>
+        <span class="card-num t-gold">30%</span>
+        <div class="card-body">15 000 membres actifs activés comme Officiers Vikings d'ici juin 2026</div>
+      </div>
+      <div class="card s4-o3">
+        <span style="font-size:28px;display:block;margin-bottom:10px">📱</span>
+        <div class="card-lbl">Objectif 3</div>
+        <div class="card-title">Engagement</div>
+        <span class="card-num t-gold">×2</span>
+        <div class="card-body">Taux Facebook : 2,5% → 5% · progression linéaire mesurée mensuellement</div>
+      </div>
+      <div class="card s4-o4">
+        <span style="font-size:28px;display:block;margin-bottom:10px">🔄</span>
+        <div class="card-lbl">Objectif 4</div>
+        <div class="card-title">Réactivation</div>
+        <span class="card-num t-gold">10%</span>
+        <div class="card-body">4 000 membres dormants reconvertis · séquence SMS+enveloppe+appel humain</div>
+      </div>
+      <div class="card s4-o5" style="border-color:rgba(201,168,76,.45)">
+        <span style="font-size:28px;display:block;margin-bottom:10px">💎</span>
+        <div class="card-lbl">Objectif 5</div>
+        <div class="card-title">ROI</div>
+        <span class="card-num t-gold">+270k€</span>
+        <div class="card-body">PBJ additionnel net sur 11 casinos · coût d'acquisition réduit de 150€ à &lt;80€</div>
+      </div>
+    </div>
+    <div class="callout s4-note" style="width:100%;text-align:center">
+      <p style="font-family:Georgia,serif;font-size:14px;font-style:italic">
+        Le plan fait travailler chaque euro <strong>2× plus efficacement</strong> que la concurrence en paid media classique.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 5 — PERSONAS
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s5">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:28px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s5-tag">03 · Cibles</div>
+      <h2 class="section-title s5-title">Les 3 <span class="t-gold">Personas</span></h2>
+    </div>
+    <div class="grid3 s5-cards">
+      <div class="persona s5-p1">
+        <div class="p-avatar">🧑‍💼</div>
+        <div class="p-badge">Cible principale</div>
+        <div class="p-name">Le Primo-Accédant</div>
+        <div class="p-desc">45–65 ans · CSP+ · Urbain / périurbain. Il cherche des expériences nouvelles mais est intimidé. Il a peur de sembler ridicule, ne sait pas quoi y faire.</div>
+        <div class="p-trigger"><strong style="color:var(--gold)">Canal :</strong> Ordre des Vikings · Enveloppes Dorées · Facebook Ads géolocalisé<br><br><strong style="color:var(--gold)">Message :</strong> "Vous avez été choisi. Une seule nuit peut tout changer."</div>
+      </div>
+      <div class="persona s5-p2">
+        <div class="p-avatar">🎲</div>
+        <div class="p-badge">Conquête</div>
+        <div class="p-name">Le Joueur Concurrent</div>
+        <div class="p-desc">40–70 ans · Joueur régulier chez Tranchant, JOA, Partouche. 60% des joueurs fréquentent plusieurs casinos. Il connaît le produit.</div>
+        <div class="p-trigger"><strong style="color:var(--gold)">Canal :</strong> Google Display local · Affichage 4×3 · RP presse régionale<br><br><strong style="color:var(--gold)">Message :</strong> "Cette nuit-là, vous ne l'aurez qu'ici."</div>
+      </div>
+      <div class="persona s5-p3" style="border-color:rgba(201,168,76,.4)">
+        <div class="p-avatar">⚔️</div>
+        <div class="p-badge" style="background:rgba(201,168,76,.2)">Levier central</div>
+        <div class="p-name">L'Officier Viking</div>
+        <div class="p-desc">50–65 ans · Membre actif BiHappy 2+ ans. Il connaît le staff par prénom, considère le casino comme "le sien". N'a jamais été traité en ambassadeur.</div>
+        <div class="p-trigger"><strong style="color:var(--gold)">Canal :</strong> Lettre de mission · Invitations dorées · Système de grades<br><br><strong style="color:var(--gold)">Message :</strong> "Vous êtes un Viking. Recrutez votre clan."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 6 — BIG IDEA
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s6">
+  <div class="grid-bg"></div>
+  <div class="scene-inner">
+    <div class="bi-eyebrow s6-eye">04 · Big Idea · Fil Rouge</div>
+    <div class="bi-title s6-t1">"Une seule nuit</div>
+    <div class="bi-title s6-t2 t-shimmer">peut tout changer."</div>
+    <div class="sep"></div>
+    <div class="bi-sub s6-sub">Ce n'est pas un slogan promotionnel. C'est une vérité humaine universelle. Vikings Casinos ne vend pas le jeu — il vend l'expérience humaine : la rencontre inattendue, l'émotion retrouvée, le frisson d'une soirée gravée.</div>
+    <div class="diff-row s6-pills">
+      <div class="diff-pill">✓ Psychologiquement juste</div>
+      <div class="diff-pill">✓ 100% ANJ-compliant</div>
+      <div class="diff-pill">✓ Aucun concurrent ne dit ça</div>
+      <div class="diff-pill">✓ Universel & personnel</div>
+    </div>
+    <div class="diff-row s6-slogans" style="margin-top:16px">
+      <div class="diff-pill" style="font-style:italic;font-family:Georgia,serif">"Vous avez été choisi."</div>
+      <div class="diff-pill" style="font-style:italic;font-family:Georgia,serif">"Votre légende commence ici."</div>
+      <div class="diff-pill" style="font-style:italic;font-family:Georgia,serif">"Quelque chose arrive."</div>
+      <div class="diff-pill" style="font-style:italic;font-family:Georgia,serif;border-color:rgba(201,168,76,.5);color:var(--gold)">"Cette nuit-là, vous y étiez."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 7 — AIDA
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s7">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:28px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s7-tag">05–06 · Copy & Parcours Client</div>
+      <h2 class="section-title s7-title">Le Parcours <span class="t-gold">AIDA</span></h2>
+    </div>
+    <div class="aida-flow s7-aida" style="width:100%">
+      <div class="aida-step s7-a1">
+        <div class="aida-letter">A</div>
+        <div class="aida-label">Attention</div>
+        <div class="aida-txt">Teaser IA surréaliste sur Facebook — enveloppe dorée géante dans des lieux iconiques. Aucun logo. "Quelque chose arrive." Coût : zéro.</div>
+      </div>
+      <div class="aida-step s7-a2">
+        <div class="aida-letter">I</div>
+        <div class="aida-label">Intérêt</div>
+        <div class="aida-txt">Enveloppes physiques dans hôtels & thermes. #QuelCasinoViking — 10 jours d'engagement organique gratuit par mois. La boucle se ferme.</div>
+      </div>
+      <div class="aida-step s7-a3">
+        <div class="aida-letter">D</div>
+        <div class="aida-label">Désir</div>
+        <div class="aida-txt">La Rune Cachée · UGC #UneSeuleNuit · FOMO réel. Les Officiers Vikings : "C'était incroyable, j'ai une invitation pour toi."</div>
+      </div>
+      <div class="aida-step s7-a4">
+        <div class="aida-letter">A</div>
+        <div class="aida-label">Action</div>
+        <div class="aida-txt">QR code → inscription BiHappy. L'Officier amène son filleul. L'intimidation disparaît — il vient en bonne compagnie.</div>
+      </div>
+    </div>
+    <div class="grid2 s7-copy" style="width:100%">
+      <div class="card">
+        <div class="card-lbl">La Promesse</div>
+        <div class="card-title" style="margin-top:8px">L'expérience avant le jeu</div>
+        <div class="card-body" style="margin-top:8px">Vikings ne vous invite pas à jouer — il vous invite à vivre quelque chose. Une soirée, une rencontre, un moment suspendu que vous n'oublierez pas.</div>
+      </div>
+      <div class="card">
+        <div class="card-lbl">Le Ton</div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+          <div style="font-size:13px"><span style="color:var(--gold)">Épique</span> sans être pompeux — jamais de machines, jamais de gains</div>
+          <div style="font-size:13px"><span style="color:var(--gold)">Humain</span> sans être banal — le Viking est audacieux et généreux</div>
+          <div style="font-size:13px"><span style="color:var(--gold)">Mystérieux</span> sans être hermétique — le secret crée la curiosité</div>
+          <div style="font-size:13px"><span style="color:var(--gold)">Responsable</span> — message ANJ intégré naturellement, jamais plaqué</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 8 — ENVELOPPES DORÉES
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s8">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:0">
+    <div style="text-align:center;width:100%;margin-bottom:28px">
+      <div class="tag s8-tag">07 · Growth Hack</div>
+      <h2 class="section-title s8-title">Les <span class="t-gold">Enveloppes Dorées</span></h2>
+    </div>
+    <div class="grid2 s8-grid" style="width:100%;align-items:center;gap:40px">
+      <div style="text-align:center">
+        <div class="env-icon s8-env">✉️</div>
+        <div class="stat-row" style="margin-top:20px">
+          <div class="stat-box" style="flex:1"><span class="stat-num">50k</span><span class="stat-lbl">Enveloppes</span></div>
+          <div class="stat-box" style="flex:1"><span class="stat-num">5k€</span><span class="stat-lbl">Budget</span></div>
+          <div class="stat-box" style="flex:1"><span class="stat-num">8%</span><span class="stat-lbl">Conversion cible</span></div>
+        </div>
+        <div class="callout" style="margin-top:20px;text-align:left">
+          <p><strong>Inspiré Red Bull</strong> — créer la preuve sociale avant le produit. Navy + cachet de cire doré frappé d'un V Viking. Gant blanc pour la remise.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card-lbl" style="margin-bottom:14px">La Séquence Complète</div>
+        <div class="step-row s8-s1">
+          <div class="step-num">①</div>
+          <div><div class="step-title">Teaser IA Facebook — J-21</div><div class="step-desc">Enveloppe dorée géante dans des lieux iconiques des 11 villes. Aucun logo. "Quelque chose arrive." Coût zéro — curiosité maximale.</div></div>
+        </div>
+        <div class="step-row s8-s2">
+          <div class="step-num">②</div>
+          <div><div class="step-title">Enveloppes physiques — J-0</div><div class="step-desc">Dans hôtels, thermes et offices de tourisme. La personne fait le lien avec ce qu'elle a vu sur Facebook. La boucle se ferme.</div></div>
+        </div>
+        <div class="step-row s8-s3">
+          <div class="step-num">③</div>
+          <div><div class="step-title">QR Code tracké → Inscription BiHappy</div><div class="step-desc">"Vous avez été choisi. Une seule nuit peut tout changer." — QR tracké par casino pour mesurer les conversions.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 9 — ORDRE DES VIKINGS
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s9">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:28px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s9-tag">07 · Programme Ambassadeur</div>
+      <h2 class="section-title s9-title">L'Ordre des <span class="t-gold">Vikings</span></h2>
+    </div>
+    <div class="grid2 s9-grid" style="width:100%;align-items:start">
+      <div>
+        <div class="card-lbl" style="margin-bottom:14px">Le Système de Grades</div>
+        <div class="grade-row s9-g1">
+          <div class="grade-icon">⚔️</div>
+          <div class="grade-name">Officier Viking</div>
+          <div class="grade-cond">Membre actif BiHappy</div>
+          <div class="grade-reward">3 invitations + soirées tournée</div>
+        </div>
+        <div class="grade-row s9-g2">
+          <div class="grade-icon">🛡️</div>
+          <div class="grade-name">Chef Viking</div>
+          <div class="grade-cond">1 filleul venu jouer</div>
+          <div class="grade-reward">+1 invitation bonus</div>
+        </div>
+        <div class="grade-row s9-g3">
+          <div class="grade-icon">👑</div>
+          <div class="grade-name">Grand Viking</div>
+          <div class="grade-cond">3 filleuls</div>
+          <div class="grade-reward">Accès prioritaire + hôte dédié</div>
+        </div>
+        <div class="grade-row s9-g4" style="border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)">
+          <div class="grade-icon">⚡</div>
+          <div class="grade-name" style="color:var(--goldb)">Jarl</div>
+          <div class="grade-cond">5 filleuls et plus</div>
+          <div class="grade-reward" style="color:var(--gold)">Invitation + hébergement Nuit des Jarls</div>
+        </div>
+      </div>
+      <div>
+        <div class="stat-row s9-stats" style="margin-bottom:20px">
+          <div class="stat-box" style="flex:1"><span class="stat-num" data-target="15000">0</span><span class="stat-lbl">Officiers cibles</span></div>
+          <div class="stat-box" style="flex:1"><span class="stat-num">5k€</span><span class="stat-lbl">Budget total</span></div>
+        </div>
+        <div class="card s9-card">
+          <div class="card-lbl">Pourquoi ça marche</div>
+          <div class="card-title" style="margin-top:8px;font-size:17px">La reconnaissance comme levier</div>
+          <div class="card-body" style="margin-top:10px">Ces membres n'ont jamais été traités comme ambassadeurs — juste comme des clients. Leur confier une mission dans une communauté dont ils sont fiers, c'est leur donner un rôle qu'ils n'ont jamais eu.<br><br><strong style="color:var(--gold)">L'Hôte Viking dédié :</strong> Pour les Jarls, un membre du staff assigné personnellement. Il connaît leurs préférences, les appelle avant chaque soirée. Coût : zéro. Impact : fidélité absolue.</div>
+        </div>
+        <div class="callout" style="margin-top:14px">
+          <p>66% des nouveaux joueurs arrivent par bouche-à-oreille. Ce programme <strong>structure ce qui fonctionne déjà</strong> naturellement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 10 — TOURNÉE DES CASINOS
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s10">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:24px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s10-tag">07 · Activation</div>
+      <h2 class="section-title s10-title">La Tournée des <span class="t-gold">Casinos</span></h2>
+      <div class="callout" style="display:inline-block;margin:0 auto 24px;border-color:rgba(201,168,76,.45)">
+        <p style="font-family:Georgia,serif;font-size:14px;font-style:italic;text-align:center;color:var(--goldl)">Chaque mois, un seul casino. Personne ne sait lequel. <strong style="color:var(--gold)">#QuelCasinoViking</strong></p>
+      </div>
+    </div>
+    <div class="phases s10-phases" style="width:100%">
+      <div class="phase">
+        <div class="phase-dot"></div>
+        <div class="phase-num">Phase 1</div>
+        <div class="phase-period">Jan — Mars</div>
+        <div class="phase-desc">Teaser IA · Enveloppes Dorées · Ordre des Vikings · 1ère soirée</div>
+      </div>
+      <div class="phase">
+        <div class="phase-dot"></div>
+        <div class="phase-num">Phase 2</div>
+        <div class="phase-period">Avr — Sept</div>
+        <div class="phase-desc">Tournée en cours · Soirée mensuelle · UGC · Newsletter BiHappy</div>
+      </div>
+      <div class="phase">
+        <div class="phase-dot"></div>
+        <div class="phase-num">Phase 3</div>
+        <div class="phase-period">Oct — Nov</div>
+        <div class="phase-desc">Boost Meta Ads · Avant-dernières soirées · Annonce Nuit des Jarls</div>
+      </div>
+      <div class="phase">
+        <div class="phase-dot"></div>
+        <div class="phase-num">Phase 4</div>
+        <div class="phase-period">Décembre</div>
+        <div class="phase-desc">La Nuit des Jarls · RP national · Bilan annuel 2026</div>
+      </div>
+    </div>
+    <div class="grid2 s10-bot" style="width:100%;align-items:start">
+      <div>
+        <div class="card-lbl" style="margin-bottom:12px">La Mécanique du Mystère</div>
+        <div class="mystery">
+          <div class="mday"><div class="mday-d">J-10</div><div class="mday-t">Image énigmatique sur toutes les pages Facebook simultanément. Aucun logo. Juste un détail du lieu. "Le prochain chapitre approche."</div></div>
+          <div class="mday"><div class="mday-d">J-5</div><div class="mday-t">Second indice plus précis — une spécialité locale, un détail architectural. La communauté débat, partage ses théories.</div></div>
+          <div class="mday"><div class="mday-d">J-2</div><div class="mday-t">Les Officiers Vikings de la ville reçoivent un message privé. Ils savent. Ils gardent le secret. Ce privilège les valorise.</div></div>
+          <div class="mday"><div class="mday-d">J-0</div><div class="mday-t">Révélation publique. Les inscriptions explosent. 10 jours d'engagement organique gratuit chaque mois.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="card-lbl" style="margin-bottom:12px">La Rune Cachée</div>
+        <div style="text-align:center;font-size:64px;margin:10px 0;filter:drop-shadow(0 0 18px rgba(201,168,76,.8))">ᚱ</div>
+        <div class="card-body" style="font-size:14px;text-align:center;margin-bottom:16px">Une rune Viking dorée dissimulée dans le casino pendant chaque soirée. Celui qui la trouve accède à <strong style="color:var(--gold)">La Nuit des Jarls</strong>. Le FOMO est réel.</div>
+        <div class="stat-row">
+          <div class="stat-box" style="flex:1"><span class="stat-num">11</span><span class="stat-lbl">Soirées / an</span></div>
+          <div class="stat-box" style="flex:1"><span class="stat-num">0€</span><span class="stat-lbl">Coût contenu UGC</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 11 — NUIT DES JARLS
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s11">
+  <div class="grid-bg"></div>
+  <div class="scene-inner">
+    <div class="jarls-icon s11-icon">⚡</div>
+    <div class="jarls-title s11-t1">La Nuit des <span class="t-shimmer">Jarls</span></div>
+    <div class="jarls-quote s11-q">"Cette nuit-là, vous y étiez."</div>
+    <div class="sep" style="margin:20px auto"></div>
+    <div class="grid3 s11-cards" style="width:100%;max-width:900px">
+      <div class="card">
+        <span style="font-size:28px;display:block;margin-bottom:10px">🏆</span>
+        <div class="card-lbl">Les Invités</div>
+        <div class="card-title">100–150 élus</div>
+        <div class="card-body">Les Jarls (5+ filleuls) + Les Trouveurs de Runes + Clients payants. On ne peut pas l'acheter — on doit le mériter.</div>
+      </div>
+      <div class="card">
+        <span style="font-size:28px;display:block;margin-bottom:10px">🏨</span>
+        <div class="card-lbl">L'Expérience</div>
+        <div class="card-title">Événement exclusif</div>
+        <div class="card-body">Partenariat hôtel · Révélation des champions · Discours · Grande clôture de l'année · Contenu final pour les réseaux.</div>
+      </div>
+      <div class="card">
+        <span style="font-size:28px;display:block;margin-bottom:10px">📰</span>
+        <div class="card-lbl">La Portée</div>
+        <div class="card-title">RP National</div>
+        <div class="card-body">Relations presse nationales · Bouche-à-oreille pour 2027 · L'événement le plus exclusif du secteur casino en France.</div>
+      </div>
+    </div>
+    <div class="callout s11-note" style="margin-top:24px;max-width:600px;text-align:center">
+      <p style="font-size:14px">N+1 (2027) : les membres recrutés en 2026 deviennent à leur tour des Officiers Vikings. <strong>L'effet boule de neige s'enclenche.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 12 — BUDGET 60 000€
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s12">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:24px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s12-tag">08 · Budget</div>
+      <h2 class="section-title s12-title">Budget <span class="t-gold">60 000 €</span> TTC</h2>
+    </div>
+    <div class="grid2 s12-grid" style="width:100%;align-items:start">
+      <div>
+        <div class="card-lbl" style="margin-bottom:12px">Répartition détaillée</div>
+        <div class="brow s12-b1"><span class="brow-label">Meta Ads Facebook — 3 vagues</span><div class="brow-bar"><div class="brow-fill" data-w="70"></div></div><span class="brow-amt">7 000€</span></div>
+        <div class="brow s12-b2"><span class="brow-label">Google Display local</span><div class="brow-bar"><div class="brow-fill" data-w="50"></div></div><span class="brow-amt">5 000€</span></div>
+        <div class="brow s12-b3"><span class="brow-label">Affichage 4×3 local</span><div class="brow-bar"><div class="brow-fill" data-w="50"></div></div><span class="brow-amt">5 000€</span></div>
+        <div class="brow s12-b4"><span class="brow-label">11 sites web SEO + page tournée</span><div class="brow-bar"><div class="brow-fill" data-w="50"></div></div><span class="brow-amt">5 000€</span></div>
+        <div class="brow s12-b5"><span class="brow-label">Production photo / vidéo / IA</span><div class="brow-bar"><div class="brow-fill" data-w="60"></div></div><span class="brow-amt">6 000€</span></div>
+        <div class="brow s12-b6"><span class="brow-label">Newsletter BiHappy + SMS</span><div class="brow-bar"><div class="brow-fill" data-w="40"></div></div><span class="brow-amt">4 000€</span></div>
+        <div class="brow s12-b7"><span class="brow-label">Enveloppes Dorées</span><div class="brow-bar"><div class="brow-fill" data-w="50"></div></div><span class="brow-amt">5 000€</span></div>
+        <div class="brow s12-b8"><span class="brow-label">Ordre des Vikings</span><div class="brow-bar"><div class="brow-fill" data-w="50"></div></div><span class="brow-amt">5 000€</span></div>
+        <div class="brow s12-b9"><span class="brow-label">Tournée déco + runes</span><div class="brow-bar"><div class="brow-fill" data-w="40"></div></div><span class="brow-amt">4 000€</span></div>
+        <div class="brow s12-b10"><span class="brow-label">Community Management</span><div class="brow-bar"><div class="brow-fill" data-w="60"></div></div><span class="brow-amt">6 000€</span></div>
+        <div class="brow s12-b11"><span class="brow-label">RP Presse + Nuit des Jarls</span><div class="brow-bar"><div class="brow-fill" data-w="40"></div></div><span class="brow-amt">4 000€</span></div>
+        <div class="brow" style="border-left-color:var(--goldb);background:rgba(201,168,76,.07)"><strong class="brow-label">TOTAL</strong><div class="brow-bar"></div><span class="brow-amt" style="font-size:20px;color:var(--goldb)">60 000€</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="stat-box">
+          <span class="stat-num" style="font-size:clamp(32px,3.5vw,52px)">212€</span>
+          <span class="stat-lbl">par casino par vague Meta Ads</span>
+          <div style="margin-top:10px;font-size:12px;color:var(--muted)">→ ~35 000 impressions / casino / vague<br>CPM Meta 45+ France ≈ 6€</div>
+        </div>
+        <div class="card">
+          <div class="card-lbl">ROI Projeté</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+            <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">500 membres/casino × 500€ PBJ</span><span style="color:var(--gold)">2 750 000€</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Prélèvement ANJ ~50%</span><span style="color:var(--gold)">1 375 000€</span></div>
+            <div style="border-top:1px solid rgba(201,168,76,.2);padding-top:10px;display:flex;justify-content:space-between">
+              <span style="font-family:Georgia,serif;font-size:15px">PBJ additionnel net</span>
+              <span style="font-family:Georgia,serif;font-size:20px;color:var(--goldb)">+270k€</span>
+            </div>
+          </div>
+        </div>
+        <div class="callout">
+          <p>Coût d'acquisition : <strong>150€ → &lt;80€</strong><br>2× plus efficace que la concurrence en paid media classique</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 13 — KPIs
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s13">
+  <div class="grid-bg"></div>
+  <div class="scene-inner" style="gap:24px">
+    <div style="text-align:center;width:100%">
+      <div class="tag s13-tag">10 · KPIs & Pilotage</div>
+      <h2 class="section-title s13-title">Mesurer la <span class="t-gold">Performance</span></h2>
+    </div>
+    <table class="kpi-table s13-table" style="width:100%">
+      <thead>
+        <tr>
+          <th>KPI</th>
+          <th>N-1 · 2025</th>
+          <th>N · 2026 Cible</th>
+          <th>N+1 · 2027</th>
+          <th>Écart</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="s13-r1"><td>Nouveaux inscrits BiHappy / casino / an</td><td style="color:var(--muted)">~200</td><td class="kpi-key">500</td><td style="color:var(--muted)">650</td><td><span class="delta">+150%</span></td></tr>
+        <tr class="s13-r2"><td>% nouveaux membres via ambassadeur</td><td style="color:var(--muted)">~66%</td><td class="kpi-key">75%</td><td style="color:var(--muted)">80%</td><td><span class="delta">+9 pts</span></td></tr>
+        <tr class="s13-r3"><td>Taux activation Officiers Vikings</td><td style="color:var(--muted)">0%</td><td class="kpi-key">30%</td><td style="color:var(--muted)">45%</td><td><span class="delta">+30 pts</span></td></tr>
+        <tr class="s13-r4"><td>Taux d'engagement Facebook moyen</td><td style="color:var(--muted)">2,5%</td><td class="kpi-key">5,0%</td><td style="color:var(--muted)">6,5%</td><td><span class="delta">+100%</span></td></tr>
+        <tr class="s13-r5"><td>Réactivation membres dormants</td><td style="color:var(--muted)">0%</td><td class="kpi-key">10%</td><td style="color:var(--muted)">18%</td><td><span class="delta">+10 pts</span></td></tr>
+        <tr class="s13-r6"><td>Coût d'acquisition / nouveau membre</td><td style="color:var(--muted)">~150€</td><td class="kpi-key">&lt;80€</td><td style="color:var(--muted)">&lt;60€</td><td><span class="delta">-47%</span></td></tr>
+        <tr class="s13-r7"><td>PBJ additionnel estimé (11 casinos)</td><td style="color:var(--muted)">—</td><td class="kpi-key">+270 k€</td><td style="color:var(--muted)">+410 k€</td><td><span class="delta">↗</span></td></tr>
+      </tbody>
+    </table>
+    <div class="callout s13-note" style="width:100%">
+      <p><strong>Le KPI qui prouve tout :</strong> si le % de nouveaux membres BiHappy issus du canal ambassadeur passe de 66% à 75%, l'Ordre des Vikings a fonctionné. Le plan a répondu à sa promesse centrale — transformer l'existant en levier d'acquisition plutôt que cibler à l'aveugle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SCENE 14 — CONCLUSION
+════════════════════════════════════════════════════ -->
+<section class="scene" id="s14">
+  <div class="grid-bg"></div>
+  <div class="scene-inner">
+    <div class="tag s14-tag" style="justify-content:center">Conclusion</div>
+    <h2 class="section-title s14-sub" style="font-family:Georgia,serif;text-align:center;margin-bottom:24px">
+      Pourquoi nous sommes <span class="t-gold">différents</span>
+    </h2>
+    <div class="vs-row s14-vs">
+      <div class="vs-card">
+        <div class="vs-label" style="text-align:center">La concurrence</div>
+        <div class="vs-item">Jackpots + machines à sous</div>
+        <div class="vs-item">Budget ×10 en paid media</div>
+        <div class="vs-item">Ciblage à l'aveugle</div>
+        <div class="vs-item">Aucune différenciation</div>
+      </div>
+      <div class="vs-sep">VS</div>
+      <div class="vs-card">
+        <div class="vs-label" style="text-align:center;color:var(--gold)">Vikings 2026</div>
+        <div class="vs-item" style="color:var(--white)">Expérience humaine unique</div>
+        <div class="vs-item" style="color:var(--white)">60 000€ chirurgicaux</div>
+        <div class="vs-item" style="color:var(--white)">50 000 membres armés</div>
+        <div class="vs-item" style="color:var(--white)">Une nuit qui change tout</div>
+      </div>
+    </div>
+    <div class="final-title s14-title">
+      "Une seule nuit<br><span class="t-shimmer">peut tout changer."</span>
+    </div>
+    <div style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center;font-size:12px;color:rgba(248,247,242,.35);letter-spacing:1px;text-align:center">
+      <span>Vikings Casinos · 2026</span>
+      <span>Budget 60 000€ TTC</span>
+      <span>EGC Business School · CCMP 2025</span>
+    </div>
+    <div class="anj-footer">
+      ⚠ Jouer comporte des risques : endettement, dépendance, isolement. Appelez le 09 74 75 13 13 (appel non surtaxé). Opérateur agréé ANJ · Interdit aux mineurs de 18 ans.
+    </div>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ════════════════════════════════════════════════
+   PARTICLES
+════════════════════════════════════════════════ */
+const cnv = document.getElementById('cnv');
+const cx  = cnv.getContext('2d');
+let W, H, pts = [];
+const RUNES = ['ᚠ','ᚢ','ᚦ','ᚨ','ᚱ','ᚲ','ᚷ','ᚹ','ᚺ','ᚾ','ᛁ','ᛏ','ᛒ','ᛖ','ᛗ','ᛚ','ᛞ','ᛟ'];
+
+function resize() {
+  W = cnv.width  = window.innerWidth;
+  H = cnv.height = window.innerHeight;
+}
+function mkPt() {
+  return {
+    x: Math.random() * W, y: Math.random() * H,
+    r: Math.random() * 1.2 + .2,
+    vx: (Math.random() - .5) * .25,
+    vy: -Math.random() * .35 - .08,
+    a: Math.random() * .5 + .1,
+    life: Math.random() * 300 + 100,
+    maxL: 400,
+    rune: Math.random() < .015
+  };
+}
+function initPts() { pts = Array.from({length:100}, mkPt); }
+function drawPts() {
+  cx.clearRect(0, 0, W, H);
+  pts.forEach((p, i) => {
+    p.x += p.vx; p.y += p.vy; p.life--;
+    const f = Math.min(p.life / 50, (p.maxL - p.life) / 50, 1);
+    if (p.rune) {
+      cx.font = `${p.r * 9}px serif`;
+      cx.fillStyle = `rgba(201,168,76,${p.a * f * .35})`;
+      cx.fillText(RUNES[~~(Math.random() * RUNES.length)], p.x, p.y);
+    } else {
+      cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      cx.fillStyle = `rgba(201,168,76,${p.a * f})`;
+      cx.fill();
+    }
+    if (p.life <= 0 || p.y < -10 || p.x < -10 || p.x > W + 10) pts[i] = mkPt();
+  });
+  requestAnimationFrame(drawPts);
+}
+resize(); window.addEventListener('resize', resize); initPts(); drawPts();
+
+/* ════════════════════════════════════════════════
+   NAV DOTS
+════════════════════════════════════════════════ */
+const SCENES = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14'];
+const LABELS = ['Cover','Problématique','Contexte','Objectifs','Personas','Big Idea','AIDA','Enveloppes','Ordre Vikings','Tournée','Nuit des Jarls','Budget','KPIs','Conclusion'];
+const dotsEl = document.getElementById('dots');
+const pbar   = document.getElementById('pbar');
+const label  = document.getElementById('section-label');
+
+SCENES.forEach((id, i) => {
+  const b = document.createElement('button');
+  b.className = 'dot'; b.title = LABELS[i];
+  b.addEventListener('click', () => document.getElementById(id).scrollIntoView({behavior:'smooth'}));
+  dotsEl.appendChild(b);
+});
+const dotEls = dotsEl.querySelectorAll('.dot');
+
+function setActive(i) {
+  dotEls.forEach((d, j) => d.classList.toggle('on', j === i));
+  label.textContent = `Vikings · ${LABELS[i]}`;
+  pbar.style.width = `${((i + 1) / SCENES.length) * 100}%`;
+}
+setActive(0);
+
+/* ════════════════════════════════════════════════
+   HELPER — section entrance trigger
+════════════════════════════════════════════════ */
+function onEnter(id, fn) {
+  ScrollTrigger.create({
+    trigger: `#${id}`,
+    start: 'top 80%',
+    once: true,
+    onEnter: fn
+  });
+}
+function onPin(id, fn, dur = 2500) {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: `#${id}`, start: 'top top',
+      end: `+=${dur}`, pin: true, scrub: 1, anticipatePin: 1,
+    }
+  });
+  fn(tl);
+  return tl;
+}
+
+/* ════════════════════════════════════════════════
+   SCROLL TRACKING → DOTS
+════════════════════════════════════════════════ */
+SCENES.forEach((id, i) => {
+  ScrollTrigger.create({
+    trigger: `#${id}`,
+    start: 'top center',
+    end: 'bottom center',
+    onToggle: self => { if (self.isActive) setActive(i); }
+  });
+});
+
+/* ════════════════════════════════════════════════
+   COUNTER ANIMATION
+════════════════════════════════════════════════ */
+function animCounter(el) {
+  const target = +el.dataset.target;
+  gsap.to({v:0}, {
+    v: target, duration: 2, ease: 'power2.out',
+    onUpdate() { el.textContent = Math.round(this.targets()[0].v).toLocaleString('fr'); }
+  });
+}
+document.querySelectorAll('[data-target]').forEach(el => {
+  ScrollTrigger.create({
+    trigger: el, start: 'top 80%', once: true,
+    onEnter: () => animCounter(el)
+  });
+});
+
+/* ════════════════════════════════════════════════
+   BUDGET BARS
+════════════════════════════════════════════════ */
+function animBars() {
+  document.querySelectorAll('.brow-fill[data-w]').forEach(el => {
+    gsap.to(el, { width: el.dataset.w + '%', duration: 1.5, ease: 'power2.out', delay: Math.random() * .5 });
+  });
+}
+ScrollTrigger.create({ trigger: '#s12', start: 'top 70%', once: true, onEnter: animBars });
+
+/* ════════════════════════════════════════════════
+   S1 — COVER (pinned cinematic intro)
+════════════════════════════════════════════════ */
+onPin('s1', tl => {
+  tl.from('.s1-rune',  { scale: 0, rotation: 180, opacity: 0, duration: 1.5, ease: 'back.out(1.5)' })
+    .from('.s1-brand', { y: 30, opacity: 0, duration: .8 }, '-=.5')
+    .from('.s1-h1',    { clipPath: 'inset(0 100% 0 0)', opacity: 0, duration: 1.5, ease: 'power4.inOut' }, '-=.3')
+    .from('.s1-sub',   { y: 20, opacity: 0, duration: .7 }, '-=.5')
+    .from('.cm-box',   { y: 40, opacity: 0, stagger: .15, duration: .8, ease: 'back.out(1.2)' }, '-=.3')
+    .to({}, { duration: 2 });
+}, 3500);
+
+/* ════════════════════════════════════════════════
+   S2 — PROBLÉMATIQUE
+════════════════════════════════════════════════ */
+onPin('s2', tl => {
+  tl.from('.s2-tag',  { y: -20, opacity: 0, duration: .6 })
+    .from('.s2-title', { x: -60, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from('.s2-q',    { y: 50, opacity: 0, filter: 'blur(10px)', duration: 1.2, ease: 'expo.out' }, '-=.4')
+    .from('.s2-c1',   { x: -80, opacity: 0, duration: .8, ease: 'power3.out' }, '-=.3')
+    .from('.s2-c2',   { y: 80, opacity: 0, duration: .8, ease: 'power3.out' }, '-=.5')
+    .from('.s2-c3',   { x: 80, opacity: 0, duration: .8, ease: 'power3.out' }, '-=.5')
+    .to({}, { duration: 1.5 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S3 — CONTEXTE
+════════════════════════════════════════════════ */
+onPin('s3', tl => {
+  tl.from('.s3-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s3-title', { x: -60, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from('.s3-stats .stat-box', { y: 60, opacity: 0, stagger: .12, duration: .9, ease: 'back.out(1.3)' }, '-=.4')
+    .from('.s3-cols > *', { y: 50, opacity: 0, stagger: .2, duration: .9, ease: 'power3.out' }, '-=.4')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S4 — OBJECTIFS
+════════════════════════════════════════════════ */
+onPin('s4', tl => {
+  tl.from('.s4-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s4-title', { y: -40, opacity: 0, duration: 1, ease: 'expo.out' }, '-=.3')
+    .from(['.s4-o1','.s4-o2','.s4-o3','.s4-o4','.s4-o5'], {
+      y: 100, opacity: 0, scale: .9,
+      stagger: .15, duration: 1, ease: 'back.out(1.4)'
+    }, '-=.4')
+    .from('.s4-note', { y: 30, opacity: 0, duration: .8 }, '-=.3')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S5 — PERSONAS
+════════════════════════════════════════════════ */
+onPin('s5', tl => {
+  tl.from('.s5-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s5-title', { x: -60, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from('.s5-p1', { x: -120, opacity: 0, duration: 1, ease: 'expo.out' }, '-=.3')
+    .from('.s5-p2', { y: 120, opacity: 0, scale: .9, duration: 1, ease: 'back.out(1.3)' }, '-=.7')
+    .from('.s5-p3', { x: 120, opacity: 0, duration: 1, ease: 'expo.out' }, '-=.7')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S6 — BIG IDEA (full cinematic)
+════════════════════════════════════════════════ */
+onPin('s6', tl => {
+  tl.from('.s6-eye',    { opacity: 0, y: -20, duration: .8 })
+    .from('.s6-t1',     { clipPath: 'inset(0 100% 0 0)', opacity: 0, duration: 1.8, ease: 'power4.inOut' }, '-=.3')
+    .from('.s6-t2',     { clipPath: 'inset(0 0% 0 100%)', opacity: 0, duration: 1.8, ease: 'power4.inOut' }, '-=1.2')
+    .from('.sep',       { scaleX: 0, opacity: 0, duration: .8, transformOrigin: 'center' }, '-=.5')
+    .from('.s6-sub',    { y: 40, opacity: 0, filter: 'blur(8px)', duration: 1.2, ease: 'expo.out' }, '-=.5')
+    .from('.s6-pills .diff-pill',   { y: 30, opacity: 0, stagger: .12, duration: .7, ease: 'back.out(1.3)' }, '-=.5')
+    .from('.s6-slogans .diff-pill', { y: 20, opacity: 0, stagger: .1, duration: .6 }, '-=.3')
+    .to({}, { duration: 2.5 });
+}, 3500);
+
+/* ════════════════════════════════════════════════
+   S7 — AIDA
+════════════════════════════════════════════════ */
+onPin('s7', tl => {
+  tl.from('.s7-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s7-title', { x: -50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from(['.s7-a1','.s7-a2','.s7-a3','.s7-a4'], {
+      y: 80, opacity: 0, scale: .9,
+      stagger: .2, duration: 1, ease: 'back.out(1.3)'
+    }, '-=.3')
+    .from('.s7-copy > *', { y: 50, opacity: 0, stagger: .2, duration: .9 }, '-=.5')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S8 — ENVELOPPES
+════════════════════════════════════════════════ */
+onPin('s8', tl => {
+  tl.from('.s8-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s8-title', { x: -60, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from('.s8-env',   { scale: 0, rotation: -15, opacity: 0, duration: 1.2, ease: 'back.out(1.5)' }, '-=.4')
+    .from('.s8-grid .stat-box',  { y: 30, opacity: 0, stagger: .12, duration: .7 }, '-=.3')
+    .from(['.s8-s1','.s8-s2','.s8-s3'], { x: 60, opacity: 0, stagger: .2, duration: .9, ease: 'power3.out' }, '-=.5')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S9 — ORDRE DES VIKINGS
+════════════════════════════════════════════════ */
+onPin('s9', tl => {
+  tl.from('.s9-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s9-title', { x: -60, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from(['.s9-g1','.s9-g2','.s9-g3','.s9-g4'], { x: -80, opacity: 0, stagger: .18, duration: .9, ease: 'power3.out' }, '-=.4')
+    .from('.s9-stats .stat-box', { y: 40, opacity: 0, stagger: .15, duration: .8, ease: 'back.out' }, '-=.6')
+    .from('.s9-card',  { x: 80, opacity: 0, duration: 1, ease: 'expo.out' }, '-=.8')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S10 — TOURNÉE
+════════════════════════════════════════════════ */
+onPin('s10', tl => {
+  tl.from('.s10-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s10-title', { x: -50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from('.phase',     { y: 60, opacity: 0, stagger: .2, duration: .9, ease: 'back.out(1.3)' }, '-=.3')
+    .from('.s10-bot > *', { y: 60, opacity: 0, stagger: .25, duration: 1, ease: 'power3.out' }, '-=.3')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S11 — NUIT DES JARLS
+════════════════════════════════════════════════ */
+onPin('s11', tl => {
+  tl.from('.s11-icon', { scale: 0, rotation: -30, opacity: 0, duration: 1.5, ease: 'back.out(1.7)' })
+    .from('.s11-t1',   { clipPath: 'inset(0 100% 0 0)', opacity: 0, duration: 1.6, ease: 'power4.inOut' }, '-=.5')
+    .from('.s11-q',    { y: 30, opacity: 0, filter: 'blur(8px)', duration: 1, ease: 'expo.out' }, '-=.5')
+    .from('.sep',      { scaleX: 0, opacity: 0, duration: .8, transformOrigin: 'center' }, '-=.5')
+    .from('.s11-cards .card', { y: 80, opacity: 0, scale: .9, stagger: .2, duration: 1, ease: 'back.out(1.3)' }, '-=.3')
+    .from('.s11-note', { y: 30, opacity: 0, duration: .8 }, '-=.3')
+    .to({}, { duration: 2.5 });
+}, 3500);
+
+/* ════════════════════════════════════════════════
+   S12 — BUDGET
+════════════════════════════════════════════════ */
+onPin('s12', tl => {
+  tl.from('.s12-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s12-title', { x: -60, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from('.brow',      { x: -60, opacity: 0, stagger: .07, duration: .6, ease: 'power3.out' }, '-=.3')
+    .from('.s12-grid > *:last-child > *', { y: 40, opacity: 0, stagger: .2, duration: .9 }, '-=1.5')
+    .to({}, { duration: 2 });
+}, 3500);
+
+/* ════════════════════════════════════════════════
+   S13 — KPIs
+════════════════════════════════════════════════ */
+onPin('s13', tl => {
+  tl.from('.s13-tag',   { y: -20, opacity: 0, duration: .6 })
+    .from('.s13-title', { x: -60, opacity: 0, duration: 1, ease: 'power3.out' }, '-=.3')
+    .from('.kpi-table thead', { y: -30, opacity: 0, duration: .7 }, '-=.3')
+    .from(['.s13-r1','.s13-r2','.s13-r3','.s13-r4','.s13-r5','.s13-r6','.s13-r7'], {
+      x: -50, opacity: 0, stagger: .12, duration: .7, ease: 'power3.out'
+    }, '-=.3')
+    .from('.s13-note', { y: 30, opacity: 0, duration: .8 }, '-=.3')
+    .to({}, { duration: 2 });
+}, 3000);
+
+/* ════════════════════════════════════════════════
+   S14 — CONCLUSION
+════════════════════════════════════════════════ */
+onPin('s14', tl => {
+  tl.from('.s14-tag', { y: -20, opacity: 0, duration: .7 })
+    .from('.s14-sub', { y: -30, opacity: 0, duration: .9, ease: 'power3.out' }, '-=.3')
+    .from('.vs-card:first-child .vs-item', { x: -60, opacity: 0, stagger: .12, duration: .7 }, '-=.3')
+    .from('.vs-sep', { scale: 0, opacity: 0, duration: .7, ease: 'back.out(1.5)' }, '-=.5')
+    .from('.vs-card:last-child .vs-item',  { x: 60, opacity: 0, stagger: .12, duration: .7 }, '-=.7')
+    .from('.s14-title', { clipPath: 'inset(0 100% 0 0)', opacity: 0, duration: 2, ease: 'power4.inOut' }, '-=.3')
+    .to({}, { duration: 3 });
+}, 4000);
+
+/* ════════════════════════════════════════════════
+   KEYBOARD NAVIGATION
+════════════════════════════════════════════════ */
+const sceneEls = SCENES.map(id => document.getElementById(id));
+let current = 0;
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    current = Math.min(current + 1, SCENES.length - 1);
+    sceneEls[current].scrollIntoView({ behavior: 'smooth' });
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    current = Math.max(current - 1, 0);
+    sceneEls[current].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+</script>
+</body>
+</html>
