@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vikings Casinos — Plan de Communication 2026</title>
+<style>
+  :root {
+    --navy: #12123A;
+    --navy-mid: #1a1a5e;
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-bright: #FFD700;
+    --offwhite: #F8F7F2;
+    --dark: #1E1E2E;
+    --red-accent: #8B1A1A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--navy);
+    font-family: 'Calibri', 'Segoe UI', sans-serif;
+    overflow: hidden;
+    color: var(--offwhite);
+  }
+
+  /* ====== CANVAS PARTICLES ====== */
+  #particles-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ====== NAVIGATION ====== */
+  #nav {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px;
+    z-index: 1000;
+    background: rgba(18,18,58,0.85);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 12px 24px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+  }
+
+  #nav button {
+    background: none; border: none;
+    color: var(--gold); font-size: 20px;
+    cursor: pointer; padding: 6px 12px;
+    border-radius: 30px;
+    transition: all 0.3s;
+  }
+  #nav button:hover { background: rgba(201,168,76,0.2); transform: scale(1.1); }
+
+  #slide-counter {
+    color: var(--gold-light);
+    font-size: 13px; font-family: Georgia, serif;
+    letter-spacing: 2px; min-width: 70px; text-align: center;
+  }
+
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    z-index: 1000;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px var(--gold);
+  }
+
+  /* ====== SLIDE CONTAINER ====== */
+  #slides-wrapper {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    perspective: 1200px;
+    z-index: 1;
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transform: translateX(100%) scale(0.95);
+    transition: all 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+    pointer-events: none;
+    padding: 60px 80px 100px;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: all;
+  }
+
+  .slide.prev {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.95);
+  }
+
+  /* ====== SLIDE CONTENT ====== */
+  .slide-inner {
+    width: 100%; max-width: 1200px;
+    height: 100%;
+    display: flex; flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ====== SLIDE 1 — COVER ====== */
+  #slide-1 {
+    background: radial-gradient(ellipse at 30% 50%, #1a1a5e 0%, #12123A 50%, #0a0a1e 100%);
+  }
+
+  .cover-content {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; position: relative;
+  }
+
+  .rune-circle {
+    width: 200px; height: 200px;
+    border: 2px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; margin-bottom: 40px;
+    animation: rotateSlow 20s linear infinite;
+  }
+
+  .rune-circle::before {
+    content: '';
+    position: absolute;
+    width: 180px; height: 180px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+    animation: rotateSlow 15s linear infinite reverse;
+  }
+
+  .rune-symbol {
+    font-size: 80px; color: var(--gold);
+    text-shadow: 0 0 30px rgba(201,168,76,0.8);
+    filter: drop-shadow(0 0 20px var(--gold));
+  }
+
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .cover-brand {
+    font-family: Georgia, serif;
+    font-size: 14px; letter-spacing: 8px;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease 0.3s both;
+  }
+
+  .cover-title {
+    font-family: Georgia, serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-style: italic;
+    color: var(--offwhite);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    animation: fadeInUp 1s ease 0.5s both;
+  }
+
+  .cover-title span { color: var(--gold); }
+
+  .cover-subtitle {
+    font-size: 18px; color: var(--gold-light);
+    letter-spacing: 3px; text-transform: uppercase;
+    animation: fadeInUp 1s ease 0.7s both;
+  }
+
+  .cover-meta {
+    display: flex; gap: 40px; margin-top: 50px;
+    animation: fadeInUp 1s ease 0.9s both;
+  }
+
+  .cover-meta-item {
+    text-align: center;
+    padding: 16px 28px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 8px;
+    background: rgba(201,168,76,0.05);
+  }
+
+  .cover-meta-item .value {
+    font-family: Georgia, serif; font-size: 24px;
+    color: var(--gold); display: block; font-weight: bold;
+  }
+
+  .cover-meta-item .label {
+    font-size: 11px; color: var(--gold-light);
+    letter-spacing: 2px; text-transform: uppercase; margin-top: 4px;
+  }
+
+  /* ====== SLIDE HEADER ====== */
+  .slide-tag {
+    font-size: 11px; letter-spacing: 4px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .slide-tag::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+
+  .slide-title {
+    font-family: Georgia, serif;
+    font-size: clamp(32px, 4.5vw, 56px);
+    color: var(--offwhite);
+    line-height: 1.15;
+    margin-bottom: 40px;
+  }
+
+  .slide-title em { color: var(--gold); font-style: italic; }
+
+  /* ====== CARDS ====== */
+  .cards-grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--gold), transparent);
+  }
+
+  .card:hover {
+    border-color: rgba(201,168,76,0.6);
+    background: rgba(201,168,76,0.06);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .card-icon {
+    font-size: 32px; margin-bottom: 14px; display: block;
+  }
+
+  .card-label {
+    font-size: 10px; letter-spacing: 3px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-family: Georgia, serif; font-size: 18px;
+    color: var(--offwhite); margin-bottom: 10px; line-height: 1.3;
+  }
+
+  .card-body { font-size: 13px; color: rgba(248,247,242,0.65); line-height: 1.6; }
+
+  .card-value {
+    font-family: Georgia, serif; font-size: 36px;
+    color: var(--gold); font-weight: bold;
+    display: block; margin-bottom: 6px;
+  }
+
+  /* ====== STAT ROW ====== */
+  .stat-row {
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+
+  .stat-box {
+    flex: 1; min-width: 160px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: Georgia, serif; font-size: clamp(28px, 3.5vw, 44px);
+    color: var(--gold); font-weight: bold;
+    display: block;
+    text-shadow: 0 0 20px rgba(201,168,76,0.4);
+  }
+
+  .stat-label {
+    font-size: 11px; color: var(--gold-light);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 8px; display: block;
+  }
+
+  /* ====== QUOTE ====== */
+  .big-quote {
+    font-family: Georgia, serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-style: italic;
+    color: var(--offwhite);
+    text-align: center;
+    line-height: 1.4;
+    position: relative;
+    padding: 40px 60px;
+  }
+
+  .big-quote::before {
+    content: '"';
+    position: absolute; top: 0; left: 20px;
+    font-size: 100px; color: rgba(201,168,76,0.2);
+    font-family: Georgia, serif; line-height: 1;
+  }
+
+  .big-quote em { color: var(--gold); font-style: normal; }
+
+  /* ====== TWO-COLUMN LAYOUT ====== */
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    align-items: start;
+  }
+
+  .three-col {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+
+  /* ====== PERSONA ====== */
+  .persona-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+
+  .persona-card:hover {
+    border-color: rgba(201,168,76,0.6);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .persona-avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--navy));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 16px;
+    border: 2px solid rgba(201,168,76,0.4);
+  }
+
+  .persona-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    margin-bottom: 12px;
+  }
+
+  .persona-name {
+    font-family: Georgia, serif; font-size: 20px;
+    color: var(--offwhite); margin-bottom: 8px;
+  }
+
+  .persona-desc { font-size: 13px; color: rgba(248,247,242,0.65); line-height: 1.6; }
+
+  .persona-trigger {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    font-size: 12px; color: var(--gold-light);
+  }
+
+  /* ====== AIDA ====== */
+  .aida-flow {
+    display: flex; gap: 0; align-items: stretch;
+  }
+
+  .aida-step {
+    flex: 1;
+    padding: 28px 20px;
+    text-align: center;
+    position: relative;
+    transition: all 0.4s;
+  }
+
+  .aida-step::after {
+    content: '▶';
+    position: absolute;
+    right: -12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold); font-size: 18px;
+    z-index: 2;
+  }
+
+  .aida-step:last-child::after { display: none; }
+
+  .aida-step:nth-child(1) { background: rgba(18,18,58,0.8); border-radius: 12px 0 0 12px; }
+  .aida-step:nth-child(2) { background: rgba(22,22,70,0.8); }
+  .aida-step:nth-child(3) { background: rgba(26,26,80,0.8); }
+  .aida-step:nth-child(4) { background: rgba(30,30,90,0.8); border-radius: 0 12px 12px 0; }
+
+  .aida-letter {
+    font-family: Georgia, serif; font-size: 64px;
+    color: var(--gold); font-weight: bold;
+    line-height: 1; margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(201,168,76,0.5);
+  }
+
+  .aida-label {
+    font-size: 12px; color: var(--gold-light); letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+
+  .aida-content { font-size: 13px; color: rgba(248,247,242,0.7); line-height: 1.6; }
+
+  /* ====== BUDGET ====== */
+  .budget-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border-left: 3px solid var(--gold);
+    margin-bottom: 8px;
+    transition: all 0.3s;
+  }
+
+  .budget-item:hover {
+    background: rgba(201,168,76,0.07);
+    transform: translateX(4px);
+  }
+
+  .budget-label { flex: 1; font-size: 14px; }
+  .budget-amount {
+    font-family: Georgia, serif; font-size: 18px;
+    color: var(--gold); font-weight: bold; white-space: nowrap;
+  }
+
+  .budget-bar-wrap {
+    width: 120px; height: 6px;
+    background: rgba(255,255,255,0.1); border-radius: 3px;
+  }
+
+  .budget-bar {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    transition: width 1.5s ease;
+  }
+
+  /* ====== TIMELINE ====== */
+  .timeline {
+    display: flex; gap: 0;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 50px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.2));
+  }
+
+  .timeline-item {
+    flex: 1; text-align: center;
+    position: relative; padding-top: 80px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    top: 40px; left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 2px solid var(--gold);
+    z-index: 2;
+    transition: all 0.3s;
+  }
+
+  .timeline-item:hover .timeline-dot {
+    background: var(--gold);
+    box-shadow: 0 0 15px var(--gold);
+    transform: translateX(-50%) scale(1.3);
+  }
+
+  .timeline-phase {
+    font-size: 10px; letter-spacing: 2px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  .timeline-period {
+    font-family: Georgia, serif; font-size: 15px;
+    color: var(--offwhite); margin-bottom: 8px;
+  }
+
+  .timeline-desc { font-size: 12px; color: rgba(248,247,242,0.55); line-height: 1.5; }
+
+  /* ====== KPI TABLE ====== */
+  .kpi-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .kpi-table th {
+    padding: 12px 16px;
+    text-align: left;
+    background: rgba(201,168,76,0.12);
+    color: var(--gold);
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    border-bottom: 2px solid rgba(201,168,76,0.3);
+  }
+
+  .kpi-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(248,247,242,0.8);
+    vertical-align: middle;
+  }
+
+  .kpi-table tr:hover td { background: rgba(201,168,76,0.05); }
+
+  .kpi-delta {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px; font-weight: bold;
+  }
+
+  .kpi-delta.up {
+    background: rgba(0,200,100,0.15);
+    color: #00c864;
+  }
+
+  /* ====== GRADE TABLE ====== */
+  .grade-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.1);
+    margin-bottom: 8px;
+    transition: all 0.3s;
+  }
+
+  .grade-row:hover {
+    background: rgba(201,168,76,0.07);
+    border-color: rgba(201,168,76,0.3);
+  }
+
+  .grade-icon { font-size: 24px; width: 36px; text-align: center; }
+  .grade-name {
+    font-family: Georgia, serif; font-size: 16px;
+    color: var(--gold); width: 160px;
+  }
+  .grade-condition { flex: 1; font-size: 13px; color: rgba(248,247,242,0.7); }
+  .grade-reward { font-size: 12px; color: var(--gold-light); text-align: right; }
+
+  /* ====== SLIDE-SPECIFIC BACKGROUNDS ====== */
+  #slide-9, #slide-10, #slide-13 {
+    background: radial-gradient(ellipse at 70% 30%, rgba(201,168,76,0.05) 0%, transparent 70%),
+                radial-gradient(ellipse at 30% 70%, rgba(18,18,58,0.8) 0%, transparent 70%);
+  }
+
+  /* ====== CALLOUT ====== */
+  .callout {
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.03));
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+
+  .callout-title {
+    font-family: Georgia, serif; font-size: 14px;
+    color: var(--gold); font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  .callout-text { font-size: 13px; color: rgba(248,247,242,0.7); line-height: 1.6; }
+
+  /* ====== LIST ====== */
+  .fancy-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .fancy-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 14px; color: rgba(248,247,242,0.8); line-height: 1.5;
+  }
+
+  .fancy-list li::before {
+    content: '◆';
+    color: var(--gold); font-size: 10px;
+    margin-top: 4px; flex-shrink: 0;
+  }
+
+  /* ====== ANIMATIONS ====== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 10px rgba(201,168,76,0.4); }
+    50% { text-shadow: 0 0 30px rgba(201,168,76,0.9), 0 0 60px rgba(201,168,76,0.4); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .slide.active .card { animation: fadeInUp 0.5s ease both; }
+  .slide.active .card:nth-child(1) { animation-delay: 0.1s; }
+  .slide.active .card:nth-child(2) { animation-delay: 0.2s; }
+  .slide.active .card:nth-child(3) { animation-delay: 0.3s; }
+  .slide.active .card:nth-child(4) { animation-delay: 0.4s; }
+  .slide.active .card:nth-child(5) { animation-delay: 0.5s; }
+
+  .slide.active .stat-box { animation: fadeInUp 0.5s ease both; }
+  .slide.active .stat-box:nth-child(1) { animation-delay: 0.1s; }
+  .slide.active .stat-box:nth-child(2) { animation-delay: 0.2s; }
+  .slide.active .stat-box:nth-child(3) { animation-delay: 0.3s; }
+  .slide.active .stat-box:nth-child(4) { animation-delay: 0.4s; }
+  .slide.active .stat-box:nth-child(5) { animation-delay: 0.5s; }
+
+  .glow-text { animation: glow 3s ease-in-out infinite; }
+
+  .gold-shimmer {
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 50%, var(--gold) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* ====== LOGO ANJ ====== */
+  .anj-badge {
+    position: fixed;
+    top: 20px; right: 24px;
+    font-size: 10px; color: rgba(248,247,242,0.4);
+    letter-spacing: 1px; z-index: 100;
+    text-align: right; line-height: 1.4;
+  }
+
+  /* ====== SLIDE INDICATOR DOTS ====== */
+  #dots {
+    position: fixed;
+    right: 20px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 6px;
+    z-index: 100;
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.25);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .dot.active {
+    background: var(--gold);
+    transform: scale(1.5);
+    box-shadow: 0 0 8px var(--gold);
+  }
+
+  /* ====== ENVELOPE ANIMATION ====== */
+  .envelope-anim {
+    position: relative; text-align: center;
+  }
+
+  .env-icon {
+    font-size: 80px;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.6));
+    animation: floatEnv 4s ease-in-out infinite;
+  }
+
+  @keyframes floatEnv {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+  }
+
+  /* ====== SCROLL HINT ====== */
+  .scroll-hint {
+    position: fixed; bottom: 90px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px; color: rgba(201,168,76,0.4);
+    letter-spacing: 2px;
+    animation: fadeIn 2s ease 2s both;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .slide { padding: 30px 24px 90px; }
+    .two-col, .three-col, .cards-grid.cols-3, .cards-grid.cols-5 {
+      grid-template-columns: 1fr;
+    }
+    .aida-flow { flex-direction: column; }
+    .aida-step::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+<div id="progress-bar"></div>
+
+<div class="anj-badge">
+  ⚠ -18 ans · Opérateur agréé ANJ<br>
+  Jouer comporte des risques — 09 74 75 13 13
+</div>
+
+<div id="dots"></div>
+
+<div id="slides-wrapper">
+
+  <!-- ===== SLIDE 1 — COVER ===== -->
+  <div class="slide active" id="slide-1">
+    <div class="slide-inner" style="align-items:center">
+      <div class="cover-content">
+        <div class="rune-circle">
+          <span class="rune-symbol">᛭</span>
+        </div>
+        <div class="cover-brand">Vikings Casinos · Plan de Communication</div>
+        <h1 class="cover-title">
+          "Une seule nuit<br><span class="gold-shimmer">peut tout changer."</span>
+        </h1>
+        <div class="cover-subtitle">Stratégie 2026 · Document Confidentiel</div>
+        <div class="cover-meta">
+          <div class="cover-meta-item">
+            <span class="value">60 000 €</span>
+            <span class="label">Budget TTC</span>
+          </div>
+          <div class="cover-meta-item">
+            <span class="value">11</span>
+            <span class="label">Casinos</span>
+          </div>
+          <div class="cover-meta-item">
+            <span class="value">Jan — Déc</span>
+            <span class="label">Période</span>
+          </div>
+          <div class="cover-meta-item">
+            <span class="value">+270 k€</span>
+            <span class="label">PBJ additionnel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2 — PROBLÉMATIQUE ===== -->
+  <div class="slide" id="slide-2">
+    <div class="slide-inner">
+      <div class="slide-tag">01 · Cadre Stratégique</div>
+      <h2 class="slide-title">La <em>Problématique</em></h2>
+      <div class="big-quote" style="margin-bottom:32px">
+        Comment Vikings Casinos peut-il acquérir de nouveaux joueurs physiques dans un marché ultra-réglementé, avec <em>60 000€</em>, face à des concurrents <em>dix fois plus dotés</em> ?
+      </div>
+      <div class="three-col">
+        <div class="card">
+          <span class="card-icon">💰</span>
+          <div class="card-label">Contrainte 1</div>
+          <div class="card-title">Budget Chirurgical</div>
+          <div class="card-body">60 000€ vs 890 000€ en média traditionnel. Chaque euro doit travailler 10× plus fort.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">⚖️</span>
+          <div class="card-label">Contrainte 2</div>
+          <div class="card-title">Cadre ANJ / GAFAM</div>
+          <div class="card-body">Remarketing interdit. Ciblage "jeux" bloqué sur Google et Meta. Les leviers classiques sont fermés.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📊</span>
+          <div class="card-label">L'opportunité</div>
+          <div class="card-title">66% par bouche-à-oreille</div>
+          <div class="card-body">66% des primo-accédants arrivent via recommandation. C'est là que se trouve la réponse.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3 — CONTEXTE & DIAGNOSTIC ===== -->
+  <div class="slide" id="slide-3">
+    <div class="slide-inner">
+      <div class="slide-tag">01 · Cadre Stratégique</div>
+      <h2 class="slide-title">Contexte & <em>Diagnostic</em></h2>
+      <div class="stat-row" style="margin-bottom:28px">
+        <div class="stat-box">
+          <span class="stat-num" data-count="204">204</span>
+          <span class="stat-label">Casinos en France</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="90">90M€</span>
+          <span class="stat-label">CA Vikings (croissance)</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="50">50 000</span>
+          <span class="stat-label">membres actifs BiHappy</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="66">66%</span>
+          <span class="stat-label">via cooptation</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="40">40 000</span>
+          <span class="stat-label">membres dormants</span>
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="card-label" style="margin-bottom:12px">Vikings aujourd'hui</div>
+          <ul class="fancy-list">
+            <li>11 casinos · 11 restaurants · présence depuis 1998</li>
+            <li>950 machines à sous — activité principale</li>
+            <li>11 pages Facebook · 2 100 fans/page · engagement 2,5%</li>
+            <li>Instagram abandonné · Aucun CM actif</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-label" style="margin-bottom:12px">La concurrence</div>
+          <ul class="fancy-list">
+            <li>Barrière 518M€ — vend le luxe</li>
+            <li>Partouche 563M€ — vend le volume</li>
+            <li>JOA 315M€ — vend la jeunesse</li>
+            <li>Tranchant 202M€ — vend le jeu pur</li>
+          </ul>
+          <div class="callout" style="margin-top:16px">
+            <div class="callout-title">L'opportunité créative</div>
+            <div class="callout-text">Tous communiquent pareil : jackpots + machines + animations. Le bar créatif est très bas. Vikings vend une histoire dont vous êtes le héros.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4 — OBJECTIFS SMART ===== -->
+  <div class="slide" id="slide-4">
+    <div class="slide-inner">
+      <div class="slide-tag">02 · Objectifs</div>
+      <h2 class="slide-title">5 Objectifs <em>SMART</em></h2>
+      <div class="cards-grid cols-5" style="gap:14px">
+        <div class="card">
+          <span class="card-icon">🎯</span>
+          <div class="card-label">Objectif 1</div>
+          <div class="card-title">Acquisition</div>
+          <span class="card-value">+15%</span>
+          <div class="card-body">+500 nouveaux inscrits BiHappy par casino en 2026</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">⚔️</span>
+          <div class="card-label">Objectif 2</div>
+          <div class="card-title">Ambassadeur</div>
+          <span class="card-value">30%</span>
+          <div class="card-body">membres actifs activés comme Officiers Vikings d'ici juin</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📱</span>
+          <div class="card-label">Objectif 3</div>
+          <div class="card-title">Engagement</div>
+          <span class="card-value">×2</span>
+          <div class="card-body">Taux d'engagement Facebook : 2,5% → 5% en décembre</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔄</span>
+          <div class="card-label">Objectif 4</div>
+          <div class="card-title">Réactivation</div>
+          <span class="card-value">10%</span>
+          <div class="card-body">des 40 000 membres dormants reconvertis d'ici septembre</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">💎</span>
+          <div class="card-label">Objectif 5</div>
+          <div class="card-title">ROI</div>
+          <span class="card-value">+270k€</span>
+          <div class="card-body">PBJ additionnel sur les 11 casinos sur l'année 2026</div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px">
+        <div class="callout-text" style="text-align:center; font-family:Georgia, serif; font-size:14px; font-style:italic">
+          Coût d'acquisition : 150€ → &lt;80€ · Soit 2× plus efficace que la concurrence en paid media classique
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 5 — PERSONAS ===== -->
+  <div class="slide" id="slide-5">
+    <div class="slide-inner">
+      <div class="slide-tag">03 · Cibles & Personas</div>
+      <h2 class="slide-title">Les 3 <em>Personas</em></h2>
+      <div class="three-col">
+        <div class="persona-card">
+          <div class="persona-avatar">🧑‍💼</div>
+          <div class="persona-badge">Cible principale</div>
+          <div class="persona-name">Le Primo-Accédant</div>
+          <div class="persona-desc">45–65 ans · CSP+ · Urbain / périurbain. Il cherche des expériences nouvelles mais est intimidé par le casino. Il ne sait pas quoi y faire, a peur de sembler ridicule.</div>
+          <div class="persona-trigger">
+            <strong style="color:var(--gold)">Ce qui le déclenche :</strong><br>
+            Une invitation d'un proche · Se sentir attendu, pas jugé · Une raison précise de venir
+          </div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-avatar">🎲</div>
+          <div class="persona-badge">Conquête</div>
+          <div class="persona-name">Le Joueur Concurrent</div>
+          <div class="persona-desc">40–70 ans · Joueur régulier chez Tranchant, JOA ou Partouche. Il connaît le produit. 60% des joueurs fréquentent plusieurs casinos.</div>
+          <div class="persona-trigger">
+            <strong style="color:var(--gold)">Ce qui le déclenche :</strong><br>
+            Une offre différenciante · Un événement unique · Une expérience introuvable ailleurs
+          </div>
+        </div>
+        <div class="persona-card" style="border-color:rgba(201,168,76,0.5)">
+          <div class="persona-avatar">⚔️</div>
+          <div class="persona-badge" style="background:rgba(201,168,76,0.25)">Levier central</div>
+          <div class="persona-name">L'Officier Viking</div>
+          <div class="persona-desc">50–65 ans · Membre actif BiHappy 2 ans+. Il connaît le staff par prénom. Il considère le casino comme "le sien". N'a jamais été traité comme ambassadeur.</div>
+          <div class="persona-trigger">
+            <strong style="color:var(--gold)">Ce qui le déclenche :</strong><br>
+            La reconnaissance · Être vu et nommé · Appartenir à quelque chose de plus grand
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 6 — BIG IDEA ===== -->
+  <div class="slide" id="slide-6">
+    <div class="slide-inner" style="align-items:center; text-align:center">
+      <div class="slide-tag" style="justify-content:center">04 · Big Idea</div>
+      <div style="margin-bottom:16px; font-size:12px; letter-spacing:3px; color:rgba(248,247,242,0.5); text-transform:uppercase">Fil rouge de campagne</div>
+      <h1 style="font-family:Georgia, serif; font-size:clamp(52px,7vw,90px); font-style:italic; color:var(--offwhite); margin-bottom:24px; line-height:1.1">
+        "Une seule nuit<br><span class="gold-shimmer">peut tout changer."</span>
+      </h1>
+      <div style="max-width:700px; font-size:16px; color:rgba(248,247,242,0.65); line-height:1.7; margin:0 auto 40px">
+        Ce n'est pas un slogan promotionnel. C'est une <strong style="color:var(--gold-light)">vérité humaine universelle</strong>. Vikings Casinos ne vend pas le jeu — il vend l'expérience humaine : la rencontre inattendue, l'émotion retrouvée, le frisson d'une soirée qui reste gravée.
+      </div>
+      <div class="cards-grid cols-3" style="text-align:left; max-width:900px; margin:0 auto">
+        <div class="card" style="padding:16px 20px">
+          <div class="card-label">Psychologiquement</div>
+          <div class="card-body">Parle à la vérité du joueur sans l'exploiter — 100% ANJ-compliant</div>
+        </div>
+        <div class="card" style="padding:16px 20px">
+          <div class="card-label">Différenciant</div>
+          <div class="card-body">Aucun concurrent ne dit ça — tous montrent jackpots et machines</div>
+        </div>
+        <div class="card" style="padding:16px 20px">
+          <div class="card-label">Universel</div>
+          <div class="card-body">Chaque persona y projette ce qu'il désire : la soirée qui change tout</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 7 — COPY STRATÉGIE ===== -->
+  <div class="slide" id="slide-7">
+    <div class="slide-inner">
+      <div class="slide-tag">05 · Copy-Stratégie</div>
+      <h2 class="slide-title">Promesse · Preuve · <em>Ton</em></h2>
+      <div class="two-col" style="align-items:stretch">
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-label">La Promesse</div>
+            <div class="card-title">L'expérience avant le jeu</div>
+            <div class="card-body">Vikings Casinos ne vous invite pas à jouer — il vous invite à vivre quelque chose. Une soirée, une rencontre, un moment suspendu que vous n'oublierez pas.</div>
+          </div>
+          <div class="card">
+            <div class="card-label">La Preuve</div>
+            <div class="card-title">Des faits qui tiennent la promesse</div>
+            <ul class="fancy-list" style="margin-top:8px">
+              <li>11 événements uniques à travers la France</li>
+              <li>Soirées sur invitation — l'exclusivité est réelle</li>
+              <li>90 000 membres qui reviennent</li>
+              <li>La Nuit des Jarls : on ne peut pas l'acheter, on doit la mériter</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="card-label" style="margin-bottom:16px">Les Slogans Déclinés</div>
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <div class="budget-item" style="border-left-color:#C9A84C">
+              <span style="font-size:11px;color:var(--gold-light);width:160px;flex-shrink:0">Fil rouge</span>
+              <span style="font-family:Georgia,serif;font-style:italic">"Une seule nuit peut tout changer."</span>
+            </div>
+            <div class="budget-item">
+              <span style="font-size:11px;color:var(--gold-light);width:160px;flex-shrink:0">Invitation</span>
+              <span style="font-family:Georgia,serif;font-style:italic">"Vous avez été choisi."</span>
+            </div>
+            <div class="budget-item">
+              <span style="font-size:11px;color:var(--gold-light);width:160px;flex-shrink:0">Tournée casinos</span>
+              <span style="font-family:Georgia,serif;font-style:italic">"Votre légende commence ici."</span>
+            </div>
+            <div class="budget-item">
+              <span style="font-size:11px;color:var(--gold-light);width:160px;flex-shrink:0">Ambassadeur</span>
+              <span style="font-family:Georgia,serif;font-style:italic">"Prouvez que vous êtes un vrai Viking."</span>
+            </div>
+            <div class="budget-item">
+              <span style="font-size:11px;color:var(--gold-light);width:160px;flex-shrink:0">Mystère</span>
+              <span style="font-family:Georgia,serif;font-style:italic">"Quelque chose arrive."</span>
+            </div>
+            <div class="budget-item" style="border-left-color:#FFD700">
+              <span style="font-size:11px;color:var(--gold-light);width:160px;flex-shrink:0">Grande Finale</span>
+              <span style="font-family:Georgia,serif;font-style:italic;color:var(--gold)">"Cette nuit-là, vous y étiez."</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 8 — AIDA ===== -->
+  <div class="slide" id="slide-8">
+    <div class="slide-inner">
+      <div class="slide-tag">06 · Parcours Client</div>
+      <h2 class="slide-title">Le Parcours <em>AIDA</em></h2>
+      <div class="aida-flow" style="margin-bottom:32px">
+        <div class="aida-step">
+          <div class="aida-letter">A</div>
+          <div class="aida-label">Attention</div>
+          <div class="aida-content">Teaser IA surréaliste sur Facebook · Enveloppe dorée géante dans des lieux iconiques · "Quelque chose arrive." — Zéro budget</div>
+        </div>
+        <div class="aida-step">
+          <div class="aida-letter">I</div>
+          <div class="aida-label">Intérêt</div>
+          <div class="aida-content">Enveloppes physiques dans hôtels & thermes · #QuelCasinoViking — 10 jours d'engagement organique gratuit par mois</div>
+        </div>
+        <div class="aida-step">
+          <div class="aida-letter">D</div>
+          <div class="aida-label">Désir</div>
+          <div class="aida-content">La Rune Cachée · UGC #UneSeuleNuit · Les Officiers Vikings créent le FOMO · "C'était incroyable, j'ai une invitation pour toi."</div>
+        </div>
+        <div class="aida-step">
+          <div class="aida-letter">A</div>
+          <div class="aida-label">Action</div>
+          <div class="aida-content">QR code tracké → inscription BiHappy · Officier amène son filleul · L'événement donne une raison précise de venir ce soir-là</div>
+        </div>
+      </div>
+      <div class="callout">
+        <div class="callout-title">La mécanique clé</div>
+        <div class="callout-text">L'intimidation du primo-accédant disparaît — il vient avec quelqu'un qu'il connaît. La première visite se fait en bonne compagnie.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 9 — ENVELOPPES DORÉES ===== -->
+  <div class="slide" id="slide-9">
+    <div class="slide-inner">
+      <div class="slide-tag">07 · Growth Hack</div>
+      <h2 class="slide-title">Les <em>Enveloppes Dorées</em></h2>
+      <div class="two-col">
+        <div>
+          <div class="envelope-anim" style="margin-bottom:28px">
+            <div class="env-icon">✉️</div>
+          </div>
+          <div class="stat-row" style="flex-wrap:wrap">
+            <div class="stat-box" style="flex:1;min-width:120px">
+              <span class="stat-num">50k</span>
+              <span class="stat-label">enveloppes</span>
+            </div>
+            <div class="stat-box" style="flex:1;min-width:120px">
+              <span class="stat-num">5k€</span>
+              <span class="stat-label">budget total</span>
+            </div>
+            <div class="stat-box" style="flex:1;min-width:120px">
+              <span class="stat-num">8%</span>
+              <span class="stat-label">conversion cible</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card-label" style="margin-bottom:16px">La Séquence</div>
+          <div style="display:flex; flex-direction:column; gap:12px">
+            <div class="budget-item">
+              <span style="color:var(--gold);font-family:Georgia,serif;font-size:18px;width:30px;flex-shrink:0">①</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px">Teaser IA Facebook</div>
+                <div style="font-size:12px;color:rgba(248,247,242,0.6)">J-21 · Enveloppe dorée en lieux iconiques · Zéro logo · Zéro explication · Coût zéro</div>
+              </div>
+            </div>
+            <div class="budget-item">
+              <span style="color:var(--gold);font-family:Georgia,serif;font-size:18px;width:30px;flex-shrink:0">②</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px">Enveloppes physiques</div>
+                <div style="font-size:12px;color:rgba(248,247,242,0.6)">J-0 · Cachet de cire doré frappé d'un V Viking · Gant blanc pour la remise · Hôtels, thermes, offices de tourisme</div>
+              </div>
+            </div>
+            <div class="budget-item">
+              <span style="color:var(--gold);font-family:Georgia,serif;font-size:18px;width:30px;flex-shrink:0">③</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px">Conversion QR</div>
+                <div style="font-size:12px;color:rgba(248,247,242,0.6)">"Vous avez été choisi. Une seule nuit peut tout changer." + QR code tracké par casino</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout" style="margin-top:16px">
+            <div class="callout-title">Inspiré Red Bull</div>
+            <div class="callout-text">Créer la preuve sociale avant même d'avoir le produit. La personne qui reçoit l'enveloppe fait le lien avec ce qu'elle a vu sur Facebook.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 10 — ORDRE DES VIKINGS ===== -->
+  <div class="slide" id="slide-10">
+    <div class="slide-inner">
+      <div class="slide-tag">07 · Programme Ambassadeur</div>
+      <h2 class="slide-title">L'Ordre des <em>Vikings</em></h2>
+      <div class="two-col">
+        <div>
+          <div class="card-label" style="margin-bottom:16px">Le Système de Grades</div>
+          <div class="grade-row">
+            <div class="grade-icon">⚔️</div>
+            <div class="grade-name">Officier Viking</div>
+            <div class="grade-condition">Membre actif BiHappy</div>
+            <div class="grade-reward">3 invitations + soirées tournée</div>
+          </div>
+          <div class="grade-row">
+            <div class="grade-icon">🛡️</div>
+            <div class="grade-name">Chef Viking</div>
+            <div class="grade-condition">1 filleul venu jouer</div>
+            <div class="grade-reward">+1 invitation bonus</div>
+          </div>
+          <div class="grade-row">
+            <div class="grade-icon">👑</div>
+            <div class="grade-name">Grand Viking</div>
+            <div class="grade-condition">3 filleuls</div>
+            <div class="grade-reward">Accès prioritaire + hôte dédié</div>
+          </div>
+          <div class="grade-row" style="border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.07)">
+            <div class="grade-icon">⚡</div>
+            <div class="grade-name" style="color:var(--gold-bright)">Jarl</div>
+            <div class="grade-condition">5 filleuls et plus</div>
+            <div class="grade-reward" style="color:var(--gold)">Invitation + hébergement Nuit des Jarls</div>
+          </div>
+        </div>
+        <div>
+          <div class="stat-row" style="margin-bottom:20px">
+            <div class="stat-box" style="flex:1">
+              <span class="stat-num">15 000</span>
+              <span class="stat-label">Officiers Vikings cibles</span>
+            </div>
+            <div class="stat-box" style="flex:1">
+              <span class="stat-num">5k€</span>
+              <span class="stat-label">Budget total</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-label">Pourquoi ça marche</div>
+            <div class="card-title" style="font-size:16px">La reconnaissance comme levier</div>
+            <div class="card-body" style="margin-top:10px">Ces membres n'ont jamais été traités comme ambassadeurs — juste comme des clients. Leur confier une mission dans une communauté dont ils sont fiers, c'est leur donner un rôle qu'ils n'ont jamais eu.<br><br>
+            <strong style="color:var(--gold)">L'Hôte Viking dédié :</strong> Pour les Jarls, un membre du staff assigné personnellement. Coût : zéro. Impact : fidélité absolue.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 11 — LA TOURNÉE ===== -->
+  <div class="slide" id="slide-11">
+    <div class="slide-inner">
+      <div class="slide-tag">07 · Activation</div>
+      <h2 class="slide-title">La Tournée des <em>Casinos</em></h2>
+      <div class="callout" style="margin-bottom:24px; border-color:rgba(201,168,76,0.5)">
+        <div class="callout-text" style="text-align:center; font-family:Georgia, serif; font-size:15px; font-style:italic; color:var(--gold-light)">
+          Chaque mois, un seul casino. Personne ne sait lequel. #QuelCasinoViking
+        </div>
+      </div>
+      <div class="cards-grid cols-2" style="margin-bottom:24px">
+        <div class="card">
+          <div class="card-label">La mécanique du mystère</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="color:var(--gold);font-size:13px;width:36px;flex-shrink:0">J-10</span>
+              <span style="font-size:13px;color:rgba(248,247,242,0.7)">Image énigmatique sur toutes les pages Facebook. Aucun logo. Juste un détail du lieu.</span>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="color:var(--gold);font-size:13px;width:36px;flex-shrink:0">J-5</span>
+              <span style="font-size:13px;color:rgba(248,247,242,0.7)">Second indice plus précis. Une spécialité locale, un détail architectural.</span>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="color:var(--gold);font-size:13px;width:36px;flex-shrink:0">J-2</span>
+              <span style="font-size:13px;color:rgba(248,247,242,0.7)">Les Officiers Vikings de la ville reçoivent un message privé. Ils savent. Ils gardent le secret.</span>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="color:var(--gold);font-size:13px;width:36px;flex-shrink:0">J-0</span>
+              <span style="font-size:13px;color:rgba(248,247,242,0.7)">Révélation publique. Les inscriptions explosent.</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">La Rune Cachée</div>
+          <div style="font-size:48px;text-align:center;margin:12px 0;filter:drop-shadow(0 0 15px rgba(201,168,76,0.8))">ᚱ</div>
+          <div class="card-body">Une rune Viking dorée dissimulée dans chaque casino pendant la soirée. Celui qui la trouve accède à <strong style="color:var(--gold)">La Nuit des Jarls</strong>. Les membres qui n'étaient pas là regrettent. Le FOMO est réel.</div>
+          <div style="margin-top:14px;font-size:13px;color:var(--gold)">#UneSeuleNuit — UGC mensuel</div>
+          <div style="font-size:12px;color:rgba(248,247,242,0.55);margin-top:4px">Le meilleur post du mois gagne une invitation Nuit des Jarls</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><span class="stat-num">11</span><span class="stat-label">Soirées / an</span></div>
+        <div class="stat-box"><span class="stat-num">3 500€</span><span class="stat-label">Budget décoration</span></div>
+        <div class="stat-box"><span class="stat-num">10j</span><span class="stat-label">Engagement organique/mois</span></div>
+        <div class="stat-box"><span class="stat-num">0€</span><span class="stat-label">Coût contenu généré</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 12 — NUIT DES JARLS ===== -->
+  <div class="slide" id="slide-12" style="background:radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 60%)">
+    <div class="slide-inner" style="align-items:center; text-align:center">
+      <div class="slide-tag" style="justify-content:center">07 · Grande Finale</div>
+      <div style="font-size:60px;margin-bottom:16px;filter:drop-shadow(0 0 30px rgba(201,168,76,0.9))">⚡</div>
+      <h2 style="font-family:Georgia,serif;font-size:clamp(36px,5vw,64px);font-style:italic;color:var(--offwhite);margin-bottom:12px">
+        La Nuit des <span class="gold-shimmer">Jarls</span>
+      </h2>
+      <div style="font-family:Georgia,serif;font-size:18px;font-style:italic;color:var(--gold-light);margin-bottom:36px">
+        "Cette nuit-là, vous y étiez."
+      </div>
+      <div class="cards-grid cols-3" style="text-align:left;max-width:960px;margin:0 auto 32px">
+        <div class="card">
+          <div class="card-icon">🏆</div>
+          <div class="card-label">Les Invités</div>
+          <div class="card-title">100–150 élus</div>
+          <div class="card-body">Les Jarls (5+ filleuls) + Les Trouveurs de Runes + Clients payants. On ne peut pas l'acheter — on doit le mériter.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏨</div>
+          <div class="card-label">L'Expérience</div>
+          <div class="card-title">Grande soirée exclusive</div>
+          <div class="card-body">Partenariat hôtel · Révélation des champions · Discours · Clôture épique de l'année · Contenu final pour les réseaux.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📰</div>
+          <div class="card-label">La Portée</div>
+          <div class="card-title">RP National</div>
+          <div class="card-body">Relations presse nationales · Bouche-à-oreille pour 2027 · L'événement le plus exclusif du secteur casino en France.</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:rgba(248,247,242,0.45);font-style:italic">Décembre 2026 · Phase 4 — Grande Finale</div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 13 — BUDGET ===== -->
+  <div class="slide" id="slide-13">
+    <div class="slide-inner">
+      <div class="slide-tag">08 · Budget</div>
+      <h2 class="slide-title">Budget <em>60 000 €</em> TTC</h2>
+      <div class="two-col">
+        <div>
+          <div class="card-label" style="margin-bottom:14px">Répartition détaillée</div>
+          <div class="budget-item">
+            <span class="budget-label">Meta Ads Facebook</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="11.7%"></div></div>
+            <span class="budget-amount">7 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">Google Display local</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="8.3%"></div></div>
+            <span class="budget-amount">5 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">Affichage 4×3 local</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="8.3%"></div></div>
+            <span class="budget-amount">5 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">11 sites web SEO + page tournée</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="8.3%"></div></div>
+            <span class="budget-amount">5 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">Newsletter BiHappy + SMS</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="6.7%"></div></div>
+            <span class="budget-amount">4 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">Production photo/vidéo/IA</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="10%"></div></div>
+            <span class="budget-amount">6 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">Les Enveloppes Dorées</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="8.3%"></div></div>
+            <span class="budget-amount">5 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">L'Ordre des Vikings</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="8.3%"></div></div>
+            <span class="budget-amount">5 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">Tournée déco + runes</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="6.7%"></div></div>
+            <span class="budget-amount">4 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">Community Management</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="10%"></div></div>
+            <span class="budget-amount">6 000€</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-label">RP Presse + Nuit des Jarls</span>
+            <div class="budget-bar-wrap"><div class="budget-bar" style="width:0%" data-width="6.7%"></div></div>
+            <span class="budget-amount">4 000€</span>
+          </div>
+          <div class="budget-item" style="border-left-color:#FFD700;background:rgba(201,168,76,0.08)">
+            <strong class="budget-label">TOTAL</strong>
+            <div class="budget-bar-wrap"></div>
+            <span class="budget-amount" style="font-size:22px;color:var(--gold-bright)">60 000€</span>
+          </div>
+        </div>
+        <div>
+          <div class="stat-box" style="margin-bottom:20px;text-align:center">
+            <span class="stat-num" style="font-size:clamp(36px,4vw,56px)">212€</span>
+            <span class="stat-label">par casino par vague Meta Ads</span>
+            <div style="margin-top:12px;font-size:13px;color:rgba(248,247,242,0.6)">→ ~35 000 impressions/casino/vague<br>CPM Meta 45+ France ≈ 6€</div>
+          </div>
+          <div class="card">
+            <div class="card-label">ROI projeté</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+              <div style="display:flex;justify-content:space-between;font-size:13px">
+                <span style="color:rgba(248,247,242,0.65)">500 membres/casino × 500€ PBJ</span>
+                <span style="color:var(--gold)">2 750 000€</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:13px">
+                <span style="color:rgba(248,247,242,0.65)">Prélèvement ANJ ~50%</span>
+                <span style="color:var(--gold)">1 375 000€</span>
+              </div>
+              <div style="border-top:1px solid rgba(201,168,76,0.2);margin-top:4px;padding-top:10px;display:flex;justify-content:space-between">
+                <span style="font-family:Georgia,serif;font-size:15px">PBJ additionnel net</span>
+                <span style="font-family:Georgia,serif;font-size:20px;color:var(--gold-bright)">+270k€</span>
+              </div>
+            </div>
+          </div>
+          <div class="callout" style="margin-top:16px">
+            <div class="callout-text">Coût d'acquisition : <strong style="color:var(--gold)">150€ → &lt;80€</strong><br>2× plus efficace que la concurrence en paid media classique</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 14 — MÉDIA PLANNING ===== -->
+  <div class="slide" id="slide-14">
+    <div class="slide-inner">
+      <div class="slide-tag">09 · Média Planning</div>
+      <h2 class="slide-title">Les 4 <em>Phases</em></h2>
+      <div class="timeline" style="margin-bottom:36px">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 1</div>
+          <div class="timeline-period">Jan — Mars</div>
+          <div class="timeline-desc">Teaser IA · Enveloppes Dorées · Ordre des Vikings lancé · 1ère soirée · SMS réactivation dormants</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 2</div>
+          <div class="timeline-period">Avr — Sept</div>
+          <div class="timeline-desc">Tournée en cours · Soirée mensuelle · #QuelCasinoViking · Rune Cachée · UGC · Newsletter mensuelle</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 3</div>
+          <div class="timeline-period">Oct — Nov</div>
+          <div class="timeline-desc">Boost Meta Ads · Avant-dernières soirées · Annonce imminente Nuit des Jarls · RP presse</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 4</div>
+          <div class="timeline-period">Décembre</div>
+          <div class="timeline-desc">La Nuit des Jarls · Révélation des champions · Contenu final · RP national · Bilan annuel</div>
+        </div>
+      </div>
+      <div class="cards-grid cols-2">
+        <div class="card">
+          <div class="card-label">Paid Media</div>
+          <ul class="fancy-list">
+            <li>Meta Ads — 3 vagues (Jan, Oct-Nov, Déc) — 7 000€</li>
+            <li>Google Display local — toute l'année — 5 000€</li>
+            <li>Affichage 4×3 — 3 quinzaines clés — 5 000€</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-label">Owned + Earned</div>
+          <ul class="fancy-list">
+            <li>11 pages Facebook — CM hebdomadaire toute l'année</li>
+            <li>Newsletter BiHappy mensuelle — 50 000 contacts</li>
+            <li>Séquence SMS réactivation — 40 000 dormants</li>
+            <li>Tournée casinos — 1 soirée/mois · 11 événements</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 15 — KPIs ===== -->
+  <div class="slide" id="slide-15">
+    <div class="slide-inner">
+      <div class="slide-tag">10 · KPIs & Pilotage</div>
+      <h2 class="slide-title">Mesurer la <em>Performance</em></h2>
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>KPI</th>
+            <th>N-1 · 2025</th>
+            <th>N · 2026 cible</th>
+            <th>N+1 · 2027</th>
+            <th>Écart</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nouveaux inscrits BiHappy / casino / an</td>
+            <td style="color:rgba(248,247,242,0.5)">~200</td>
+            <td style="color:var(--gold);font-family:Georgia,serif;font-weight:bold">500</td>
+            <td style="color:rgba(248,247,242,0.6)">650</td>
+            <td><span class="kpi-delta up">+150%</span></td>
+          </tr>
+          <tr>
+            <td>% nouveaux membres via ambassadeur</td>
+            <td style="color:rgba(248,247,242,0.5)">~66%</td>
+            <td style="color:var(--gold);font-family:Georgia,serif;font-weight:bold">75%</td>
+            <td style="color:rgba(248,247,242,0.6)">80%</td>
+            <td><span class="kpi-delta up">+9 pts</span></td>
+          </tr>
+          <tr>
+            <td>Taux activation Officiers Vikings</td>
+            <td style="color:rgba(248,247,242,0.5)">0%</td>
+            <td style="color:var(--gold);font-family:Georgia,serif;font-weight:bold">30%</td>
+            <td style="color:rgba(248,247,242,0.6)">45%</td>
+            <td><span class="kpi-delta up">+30 pts</span></td>
+          </tr>
+          <tr>
+            <td>Taux engagement Facebook moyen</td>
+            <td style="color:rgba(248,247,242,0.5)">2,5%</td>
+            <td style="color:var(--gold);font-family:Georgia,serif;font-weight:bold">5,0%</td>
+            <td style="color:rgba(248,247,242,0.6)">6,5%</td>
+            <td><span class="kpi-delta up">+100%</span></td>
+          </tr>
+          <tr>
+            <td>Réactivation membres dormants</td>
+            <td style="color:rgba(248,247,242,0.5)">0%</td>
+            <td style="color:var(--gold);font-family:Georgia,serif;font-weight:bold">10%</td>
+            <td style="color:rgba(248,247,242,0.6)">18%</td>
+            <td><span class="kpi-delta up">+10 pts</span></td>
+          </tr>
+          <tr>
+            <td>Coût d'acquisition / nouveau membre</td>
+            <td style="color:rgba(248,247,242,0.5)">~150€</td>
+            <td style="color:var(--gold);font-family:Georgia,serif;font-weight:bold">&lt;80€</td>
+            <td style="color:rgba(248,247,242,0.6)">&lt;60€</td>
+            <td><span class="kpi-delta up">-47%</span></td>
+          </tr>
+          <tr>
+            <td>PBJ additionnel estimé (11 casinos)</td>
+            <td style="color:rgba(248,247,242,0.5)">—</td>
+            <td style="color:var(--gold);font-family:Georgia,serif;font-weight:bold">+270 k€</td>
+            <td style="color:rgba(248,247,242,0.6)">+410 k€</td>
+            <td><span class="kpi-delta up">↗</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top:16px">
+        <div class="callout-title">Le KPI qui prouve tout</div>
+        <div class="callout-text">Si le % de nouveaux membres BiHappy issus du canal ambassadeur passe de 66% à 75%, l'Ordre des Vikings a fonctionné. Le plan a répondu à sa promesse centrale.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 16 — ARCHITECTURE ===== -->
+  <div class="slide" id="slide-16">
+    <div class="slide-inner">
+      <div class="slide-tag">Synthèse</div>
+      <h2 class="slide-title">L'Architecture <em>Complète</em></h2>
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="display:inline-block;padding:12px 32px;border:2px solid var(--gold);border-radius:8px;font-family:Georgia,serif;font-size:18px;font-style:italic;color:var(--gold);box-shadow:0 0 20px rgba(201,168,76,0.2)">
+          "Une seule nuit peut tout changer"
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <div class="card" style="border-color:rgba(201,168,76,0.4);text-align:center">
+            <span class="card-icon">✉️</span>
+            <div class="card-label">Growth Hack</div>
+            <div class="card-title">Enveloppes Dorées</div>
+            <div class="card-body">Génère la 1ère visite du Primo-Accédant · 5 000€ · 50 000 enveloppes</div>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <div class="card" style="border-color:rgba(201,168,76,0.4);text-align:center">
+            <span class="card-icon">⚔️</span>
+            <div class="card-label">Programme</div>
+            <div class="card-title">Ordre des Vikings</div>
+            <div class="card-body">Structure le bouche-à-oreille existant (66%) · 5 000€ · 15 000 Officiers</div>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <div class="card" style="border-color:rgba(201,168,76,0.4);text-align:center">
+            <span class="card-icon">🗺️</span>
+            <div class="card-label">Activation</div>
+            <div class="card-title">Tournée des Casinos</div>
+            <div class="card-body">11 soirées mystères · #QuelCasinoViking · Rune Cachée · UGC #UneSeuleNuit</div>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <div class="card" style="border-color:rgba(201,168,76,0.6);background:rgba(201,168,76,0.06);text-align:center">
+            <span class="card-icon">⚡</span>
+            <div class="card-label">Grande Finale</div>
+            <div class="card-title" style="color:var(--gold)">Nuit des Jarls</div>
+            <div class="card-body">Jarls + Trouveurs de Runes · Partenariat hôtel · RP national · Clôture épique</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 17 — CONCLUSION ===== -->
+  <div class="slide" id="slide-17" style="background:radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.08) 0%, transparent 60%)">
+    <div class="slide-inner" style="align-items:center;text-align:center">
+      <div class="slide-tag" style="justify-content:center">Conclusion</div>
+      <h2 style="font-family:Georgia,serif;font-size:clamp(28px,3.5vw,44px);color:var(--offwhite);margin-bottom:20px">
+        Pourquoi nous sommes <em style="color:var(--gold)">différents</em>
+      </h2>
+      <div style="max-width:800px;margin:0 auto 40px">
+        <div class="three-col" style="text-align:left">
+          <div class="card">
+            <div class="card-label">Nos concurrents</div>
+            <ul class="fancy-list" style="margin-top:8px">
+              <li>Jackpots + machines</li>
+              <li>Budget × 10 en paid media</li>
+              <li>Ciblage à l'aveugle</li>
+              <li>Pas de différenciation</li>
+            </ul>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center">
+            <div style="font-size:40px;color:var(--gold)">VS</div>
+          </div>
+          <div class="card" style="border-color:rgba(201,168,76,0.5)">
+            <div class="card-label">Vikings 2026</div>
+            <ul class="fancy-list" style="margin-top:8px">
+              <li>Expérience humaine</li>
+              <li>60 000€ chirurgicaux</li>
+              <li>50 000 membres armés</li>
+              <li>Une nuit qui change tout</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:40px">
+        <h1 style="font-family:Georgia,serif;font-size:clamp(40px,5.5vw,70px);font-style:italic;color:var(--offwhite);line-height:1.2">
+          "Une seule nuit<br><span class="gold-shimmer glow-text">peut tout changer."</span>
+        </h1>
+      </div>
+      <div style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;font-size:12px;color:rgba(248,247,242,0.4);letter-spacing:1px">
+        <span>Vikings Casinos · 2026</span>
+        <span>Budget 60 000€ TTC</span>
+        <span>EGC Business School · CCMP 2025</span>
+      </div>
+      <div style="margin-top:20px;font-size:11px;color:rgba(248,247,242,0.3);line-height:1.6;max-width:600px">
+        ⚠ Jouer comporte des risques : endettement, dépendance, isolement. Appelez le 09 74 75 13 13 (appel non surtaxé). Opérateur agréé ANJ · Interdit aux mineurs.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slides-wrapper -->
+
+<!-- Navigation -->
+<div id="nav">
+  <button onclick="prevSlide()" title="Précédent">◀</button>
+  <span id="slide-counter">1 / 17</span>
+  <button onclick="nextSlide()" title="Suivant">▶</button>
+</div>
+
+<div class="scroll-hint">↑↓ Flèches · Espace · Scroll pour naviguer</div>
+
+<script>
+// ====== STATE ======
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+const counter = document.getElementById('slide-counter');
+const progressBar = document.getElementById('progress-bar');
+const dotsContainer = document.getElementById('dots');
+
+// ====== DOTS ======
+for (let i = 0; i < total; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+}
+
+function updateDots() {
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+}
+
+// ====== NAVIGATION ======
+function goToSlide(n) {
+  slides[current].classList.remove('active');
+  slides[current].classList.add('prev');
+  setTimeout(() => slides[current].classList.remove('prev'), 700);
+  current = Math.max(0, Math.min(total - 1, n));
+  slides[current].classList.add('active');
+  counter.textContent = `${current + 1} / ${total}`;
+  progressBar.style.width = `${((current + 1) / total) * 100}%`;
+  updateDots();
+  animateBudgetBars();
+  animateCounters();
+}
+
+function nextSlide() { if (current < total - 1) goToSlide(current + 1); }
+function prevSlide() { if (current > 0) goToSlide(current - 1); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+});
+
+// Wheel
+let wheelCooldown = false;
+document.addEventListener('wheel', e => {
+  if (wheelCooldown) return;
+  wheelCooldown = true;
+  if (e.deltaY > 0) nextSlide(); else prevSlide();
+  setTimeout(() => wheelCooldown = false, 800);
+});
+
+// Touch
+let touchStart = 0;
+document.addEventListener('touchstart', e => touchStart = e.touches[0].clientX, { passive: true });
+document.addEventListener('touchend', e => {
+  const delta = touchStart - e.changedTouches[0].clientX;
+  if (Math.abs(delta) > 50) { if (delta > 0) nextSlide(); else prevSlide(); }
+}, { passive: true });
+
+// ====== BUDGET BAR ANIMATION ======
+function animateBudgetBars() {
+  const bars = slides[current].querySelectorAll('.budget-bar[data-width]');
+  bars.forEach(bar => {
+    bar.style.width = '0%';
+    setTimeout(() => { bar.style.width = bar.dataset.width; }, 100);
+  });
+}
+
+// ====== COUNTER ANIMATION ======
+function animateCounters() {
+  const nums = slides[current].querySelectorAll('[data-count]');
+  nums.forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const original = el.textContent;
+    const suffix = original.replace(/[\d,]/g, '');
+    let current = 0;
+    const step = target / 40;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.floor(current).toLocaleString('fr') + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 30);
+  });
+}
+
+// ====== PARTICLES CANVAS ======
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function createParticle() {
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 1.5 + 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    speedY: -Math.random() * 0.4 - 0.1,
+    opacity: Math.random() * 0.6 + 0.1,
+    life: Math.random() * 300 + 100,
+    maxLife: 400,
+    isRune: Math.random() < 0.02
+  };
+}
+
+const RUNES = ['ᚠ','ᚢ','ᚦ','ᚨ','ᚱ','ᚲ','ᚷ','ᚹ','ᚺ','ᚾ','ᛁ','ᛃ','ᛇ','ᛈ','ᛉ','ᛊ','ᛏ','ᛒ','ᛖ','ᛗ','ᛚ','ᛜ','ᛞ','ᛟ'];
+
+for (let i = 0; i < 120; i++) particles.push(createParticle());
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+    p.life--;
+    const fade = Math.min(p.life / 50, (p.maxLife - p.life) / 50, 1);
+    if (p.isRune) {
+      ctx.font = `${p.size * 8}px serif`;
+      ctx.fillStyle = `rgba(201,168,76,${p.opacity * fade * 0.4})`;
+      ctx.fillText(RUNES[Math.floor(Math.random() * RUNES.length)], p.x, p.y);
+    } else {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,168,76,${p.opacity * fade})`;
+      ctx.fill();
+    }
+    if (p.life <= 0 || p.y < -10 || p.x < -10 || p.x > canvas.width + 10) {
+      particles[i] = createParticle();
+    }
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// Init
+updateDots();
+progressBar.style.width = `${(1 / total) * 100}%`;
+</script>
+</body>
+</html>
