@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinematic Hero</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --muted-foreground: #64748b;
+    --color-foreground: #0f172a;
+    --color-background: #ffffff;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Utility ─────────────────────────────────────── */
+  .gsap-reveal { visibility: hidden; }
+
+  /* ── Film grain ──────────────────────────────────── */
+  .film-grain {
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 50;
+    opacity: 0.05; mix-blend-mode: overlay;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23n)"/></svg>');
+  }
+
+  /* ── Grid background ─────────────────────────────── */
+  .bg-grid {
+    background-size: 60px 60px;
+    background-image:
+      linear-gradient(to right,  color-mix(in srgb, var(--color-foreground) 5%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-foreground) 5%, transparent) 1px, transparent 1px);
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  }
+
+  /* ── Typography effects ──────────────────────────── */
+  .text-3d-matte {
+    color: var(--color-foreground);
+    text-shadow:
+      0 10px 30px color-mix(in srgb, var(--color-foreground) 20%, transparent),
+      0 2px  4px  color-mix(in srgb, var(--color-foreground) 10%, transparent);
+  }
+
+  .text-silver-matte {
+    background: linear-gradient(180deg, var(--color-foreground) 0%, color-mix(in srgb, var(--color-foreground) 40%, transparent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateZ(0);
+    filter:
+      drop-shadow(0px 10px 20px color-mix(in srgb, var(--color-foreground) 15%, transparent))
+      drop-shadow(0px 2px  4px  color-mix(in srgb, var(--color-foreground) 10%, transparent));
+  }
+
+  .text-card-silver {
+    background: linear-gradient(180deg, #fff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateZ(0);
+    filter:
+      drop-shadow(0px 12px 24px rgba(0,0,0,.8))
+      drop-shadow(0px 4px  8px  rgba(0,0,0,.6));
+  }
+
+  /* ── Card ────────────────────────────────────────── */
+  .premium-card {
+    background: linear-gradient(145deg, #162c6d 0%, #0a101d 100%);
+    box-shadow:
+      0 40px 100px -20px rgba(0,0,0,.9),
+      0 20px  40px -20px rgba(0,0,0,.8),
+      inset 0  1px 2px rgba(255,255,255,.2),
+      inset 0 -2px 4px rgba(0,0,0,.8);
+    border: 1px solid rgba(255,255,255,.04);
+    position: relative;
+  }
+
+  .card-sheen {
+    position: absolute; inset: 0; border-radius: inherit;
+    pointer-events: none; z-index: 50;
+    background: radial-gradient(800px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.06) 0%, transparent 40%);
+    mix-blend-mode: screen;
+  }
+
+  /* ── iPhone ──────────────────────────────────────── */
+  .iphone-bezel {
+    background: #111;
+    box-shadow:
+      inset 0 0 0 2px #52525b,
+      inset 0 0 0 7px #000,
+      0 40px 80px -15px rgba(0,0,0,.9),
+      0 15px 25px  -5px rgba(0,0,0,.7);
+    transform-style: preserve-3d;
+  }
+
+  .hw-btn {
+    background: linear-gradient(90deg, #404040 0%, #171717 100%);
+    box-shadow:
+      -2px 0 5px rgba(0,0,0,.8),
+      inset -1px 0 1px rgba(255,255,255,.15),
+      inset  1px 0 2px rgba(0,0,0,.8);
+    border-left: 1px solid rgba(255,255,255,.05);
+  }
+
+  .screen-glare {
+    background: linear-gradient(110deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 45%);
+  }
+
+  .widget-depth {
+    background: linear-gradient(180deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.01) 100%);
+    box-shadow:
+      0 10px 20px rgba(0,0,0,.3),
+      inset 0  1px 1px rgba(255,255,255,.05),
+      inset 0 -1px 1px rgba(0,0,0,.5);
+    border: 1px solid rgba(255,255,255,.03);
+  }
+
+  /* ── Floating badge ──────────────────────────────── */
+  .glass-badge {
+    background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.01) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.1),
+      0 25px 50px -12px rgba(0,0,0,.8),
+      inset 0  1px 1px rgba(255,255,255,.2),
+      inset 0 -1px 1px rgba(0,0,0,.5);
+  }
+
+  /* ── CTA Buttons ─────────────────────────────────── */
+  .btn-light, .btn-dark {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; padding: 16px 32px; border-radius: 20px;
+    text-decoration: none; cursor: pointer;
+    transition: all .4s cubic-bezier(.25,1,.5,1);
+  }
+  .btn-light {
+    background: linear-gradient(180deg, #fff 0%, #f1f5f9 100%);
+    color: #0f172a;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.05), 0 2px 4px rgba(0,0,0,.1),
+                0 12px 24px -4px rgba(0,0,0,.3),
+                inset 0 1px 1px #fff, inset 0 -3px 6px rgba(0,0,0,.06);
+  }
+  .btn-light:hover  { transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(0,0,0,.05), 0 6px 12px -2px rgba(0,0,0,.15), 0 20px 32px -6px rgba(0,0,0,.4), inset 0 1px 1px #fff, inset 0 -3px 6px rgba(0,0,0,.06); }
+  .btn-light:active { transform: translateY(1px); background: linear-gradient(180deg,#f1f5f9 0%,#e2e8f0 100%); }
+
+  .btn-dark {
+    background: linear-gradient(180deg, #27272a 0%, #18181b 100%);
+    color: #fff;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 2px 4px rgba(0,0,0,.6),
+                0 12px 24px -4px rgba(0,0,0,.9),
+                inset 0 1px 1px rgba(255,255,255,.15), inset 0 -3px 6px rgba(0,0,0,.8);
+  }
+  .btn-dark:hover  { transform: translateY(-3px); background: linear-gradient(180deg,#3f3f46 0%,#27272a 100%); box-shadow: 0 0 0 1px rgba(255,255,255,.15), 0 6px 12px -2px rgba(0,0,0,.7), 0 20px 32px -6px rgba(0,0,0,1), inset 0 1px 1px rgba(255,255,255,.2), inset 0 -3px 6px rgba(0,0,0,.8); }
+  .btn-dark:active { transform: translateY(1px); background:#18181b; }
+
+  /* ── Progress ring ───────────────────────────────── */
+  .progress-ring {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    stroke-dasharray: 402;
+    stroke-dashoffset: 402;
+    stroke-linecap: round;
+  }
+
+  /* ── Dynamic Island pulse ────────────────────────── */
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .di-dot { animation: pulse 2s ease-in-out infinite; }
+
+  /* ── Layout ──────────────────────────────────────── */
+  #hero {
+    position: relative; width: 100vw; height: 100vh;
+    overflow: hidden; display: flex;
+    align-items: center; justify-content: center;
+    perspective: 1500px;
+  }
+
+  .hero-texts {
+    position: absolute; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; width: 100%; padding: 0 16px;
+    will-change: transform;
+  }
+
+  .hero-texts h1 {
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 800; line-height: 1.1;
+  }
+
+  .cta-layer {
+    position: absolute; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; width: 100%; padding: 0 16px;
+    will-change: transform; pointer-events: auto;
+  }
+
+  .cta-layer h2 {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 700; letter-spacing: -.025em;
+    margin-bottom: 24px;
+  }
+
+  .cta-layer p {
+    color: var(--muted-foreground);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 300; line-height: 1.7;
+    max-width: 480px; margin: 0 auto 48px;
+  }
+
+  .cta-btns {
+    display: flex; gap: 24px;
+    flex-wrap: wrap; justify-content: center;
+  }
+
+  .btn-label-small { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .6; margin-bottom: -2px; }
+  .btn-label-big   { font-size: 1.25rem; font-weight: 700; line-height: 1; letter-spacing: -.01em; }
+
+  /* ── Card wrapper ────────────────────────────────── */
+  #card-wrap {
+    position: absolute; inset: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: center;
+    perspective: 1500px; pointer-events: none;
+  }
+
+  #main-card {
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: auto;
+    width: 92vw; height: 92vh;
+    border-radius: 32px;
+  }
+
+  @media (min-width: 768px) {
+    #main-card { width: 85vw; height: 85vh; border-radius: 40px; }
+  }
+
+  /* ── Card inner grid ─────────────────────────────── */
+  .card-grid {
+    position: relative; z-index: 10;
+    width: 100%; height: 100%;
+    max-width: 1280px; margin: 0 auto;
+    padding: 24px 16px;
+    display: flex; flex-direction: column;
+    justify-content: space-evenly; align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      gap: 32px; padding: 0 48px;
+      justify-content: initial;
+    }
+  }
+
+  /* ── Brand name (right col on desktop) ───────────── */
+  .brand-name {
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    font-weight: 900; text-transform: uppercase;
+    letter-spacing: -.04em;
+    order: 1;
+    display: flex; justify-content: center;
+  }
+
+  @media (min-width: 1024px) { .brand-name { order: 3; justify-content: flex-end; } }
+
+  /* ── Mockup center ───────────────────────────────── */
+  .mockup-wrap {
+    order: 2;
+    position: relative; width: 100%; height: 380px;
+    display: flex; align-items: center; justify-content: center;
+    perspective: 1000px;
+  }
+
+  @media (min-width: 1024px) { .mockup-wrap { height: 600px; } }
+
+  .mockup-inner {
+    position: relative; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transform: scale(.65);
+  }
+
+  @media (min-width: 768px)  { .mockup-inner { transform: scale(.85); } }
+  @media (min-width: 1024px) { .mockup-inner { transform: scale(1); } }
+
+  /* ── iPhone shell ────────────────────────────────── */
+  .iphone {
+    position: relative;
+    width: 280px; height: 580px;
+    border-radius: 48px;
+    display: flex; flex-direction: column;
+    will-change: transform;
+    transform-style: preserve-3d;
+  }
+
+  .iphone-screen {
+    position: absolute; inset: 7px;
+    background: #050914; border-radius: 40px;
+    overflow: hidden; color: #fff; z-index: 10;
+    box-shadow: inset 0 0 15px rgba(0,0,0,1);
+  }
+
+  .dynamic-island {
+    position: absolute; top: 5px;
+    left: 50%; transform: translateX(-50%);
+    width: 100px; height: 28px;
+    background: #000; border-radius: 9999px;
+    z-index: 50;
+    display: flex; align-items: center; justify-content: flex-end; padding: 0 12px;
+    box-shadow: inset 0 -1px 2px rgba(255,255,255,.1);
+  }
+
+  .app-content {
+    position: relative; width: 100%; height: 100%;
+    padding: 48px 20px 32px;
+    display: flex; flex-direction: column;
+  }
+
+  .app-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;
+  }
+
+  .app-avatar {
+    width: 36px; height: 36px; border-radius: 9999px;
+    background: rgba(255,255,255,.05); color: #e4e4e7;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 8px 16px rgba(0,0,0,.5);
+  }
+
+  .ring-wrap {
+    position: relative; width: 176px; height: 176px;
+    margin: 0 auto 32px;
+    display: flex; align-items: center; justify-content: center;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,.8));
+  }
+
+  .ring-center { text-align: center; z-index: 10; position: relative; }
+  .counter-val { font-size: 2.25rem; font-weight: 900; letter-spacing: -.04em; }
+  .ring-label  { font-size: 8px; color: rgba(147,197,253,.5); text-transform: uppercase; letter-spacing: .1em; font-weight: 700; margin-top: 2px; }
+
+  .widgets { display: flex; flex-direction: column; gap: 12px; }
+
+  .widget {
+    border-radius: 16px; padding: 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .widget-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
+  }
+
+  .widget-icon.blue   { background: linear-gradient(135deg,rgba(59,130,246,.2),rgba(37,99,235,.05)); border: 1px solid rgba(59,130,246,.2); }
+  .widget-icon.green  { background: linear-gradient(135deg,rgba(16,185,129,.2),rgba(5,150,105,.05));  border: 1px solid rgba(16,185,129,.2); }
+
+  .widget-lines { flex: 1; }
+  .wl-top    { height: 8px;  width: 80px;  background: #d4d4d8; border-radius: 9999px; margin-bottom: 8px; box-shadow: inset 0 1px 2px rgba(0,0,0,.3); }
+  .wl-bottom { height: 6px;  background: #52525b; border-radius: 9999px; box-shadow: inset 0 1px 2px rgba(0,0,0,.3); }
+  .wl-bottom.w1 { width: 48px; }
+  .wl-bottom.w2 { width: 96px; }
+
+  .home-indicator {
+    position: absolute; bottom: 8px;
+    left: 50%; transform: translateX(-50%);
+    width: 120px; height: 4px;
+    background: rgba(255,255,255,.2); border-radius: 9999px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.5);
+  }
+
+  /* ── Floating badges ─────────────────────────────── */
+  .badge {
+    position: absolute; display: flex; align-items: center; gap: 12px;
+    border-radius: 16px; padding: 12px 16px; z-index: 30;
+  }
+
+  @media (min-width: 1024px) { .badge { border-radius: 20px; padding: 16px 20px; } }
+
+  .badge-1 { top: 24px;   left: -15px; }
+  .badge-2 { bottom: 48px; right: -15px; }
+
+  @media (min-width: 1024px) {
+    .badge-1 { top: 48px;   left: -80px; }
+    .badge-2 { bottom: 80px; right: -80px; }
+  }
+
+  .badge-icon {
+    width: 40px; height: 40px; border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+
+  @media (min-width: 1024px) { .badge-icon { width: 48px; height: 48px; font-size: 22px; } }
+
+  .badge-1 .badge-icon { background: linear-gradient(180deg,rgba(59,130,246,.2),rgba(30,64,175,.1)); border: 1px solid rgba(59,130,246,.3); }
+  .badge-2 .badge-icon { background: linear-gradient(180deg,rgba(99,102,241,.2),rgba(67,56,202,.1)); border: 1px solid rgba(99,102,241,.3); }
+
+  .badge-title { color:#fff; font-size:13px; font-weight:700; letter-spacing:-.01em; }
+  .badge-sub   { color:rgba(147,197,253,.5); font-size:11px; font-weight:500; }
+
+  @media (min-width:1024px) { .badge-title { font-size:15px; } .badge-sub { font-size:13px; } }
+
+  /* ── Left text ───────────────────────────────────── */
+  .left-text {
+    order: 3; text-align: center;
+    display: flex; flex-direction: column; justify-content: center;
+    width: 100%; padding: 0 16px;
+  }
+
+  @media (min-width: 1024px) { .left-text { order: 1; text-align: left; padding: 0; } }
+
+  .left-text h3 {
+    color: #fff; font-size: clamp(1.4rem, 2.5vw, 2.25rem);
+    font-weight: 700; letter-spacing: -.025em;
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 1024px) { .left-text h3 { margin-bottom: 20px; } }
+
+  .left-text p {
+    display: none; color: rgba(147,197,253,.7);
+    font-size: clamp(.875rem, 1.1vw, 1.1rem);
+    line-height: 1.7;
+  }
+
+  @media (min-width: 768px) { .left-text p { display: block; } }
+</style>
+</head>
+<body>
+
+<section id="hero">
+  <!-- Film grain -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- Grid background -->
+  <div class="bg-grid" id="bg-grid"
+       style="position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5"
+       aria-hidden="true"></div>
+
+  <!-- ── Hero text layer ── -->
+  <div class="hero-texts" id="hero-texts">
+    <h1 class="text-track gsap-reveal text-3d-matte" style="margin-bottom:8px">
+      Track the journey,
+    </h1>
+    <h1 class="text-days gsap-reveal text-silver-matte" style="font-weight:900;letter-spacing:-.04em">
+      not just the days.
+    </h1>
+  </div>
+
+  <!-- ── CTA layer ── -->
+  <div class="cta-layer gsap-reveal" id="cta-layer">
+    <h2 class="text-silver-matte">Start your recovery.</h2>
+    <p>Join thousands of others in the 12-step program and take control of your timeline today.</p>
+    <div class="cta-btns">
+      <a href="#" class="btn-light" aria-label="Download on the App Store">
+        <svg width="32" height="32" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true">
+          <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+        </svg>
+        <div>
+          <div class="btn-label-small">Download on the</div>
+          <div class="btn-label-big">App Store</div>
+        </div>
+      </a>
+      <a href="#" class="btn-dark" aria-label="Get it on Google Play">
+        <svg width="28" height="28" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
+          <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+        </svg>
+        <div>
+          <div class="btn-label-small" style="color:rgba(212,212,216,.6)">Get it on</div>
+          <div class="btn-label-big">Google Play</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Card layer ── -->
+  <div id="card-wrap">
+    <div id="main-card" class="premium-card gsap-reveal">
+      <div class="card-sheen" id="card-sheen" aria-hidden="true"></div>
+
+      <div class="card-grid">
+
+        <!-- Brand name -->
+        <div class="brand-name card-right-text gsap-reveal">
+          <span class="text-card-silver">Sobers</span>
+        </div>
+
+        <!-- iPhone mockup -->
+        <div class="mockup-wrap mockup-scroll-wrapper">
+          <div class="mockup-inner">
+
+            <!-- iPhone -->
+            <div class="iphone iphone-bezel" id="mockup-3d">
+              <!-- Hardware buttons -->
+              <div class="hw-btn" style="position:absolute;top:120px;left:-3px;width:3px;height:25px;border-radius:3px 0 0 3px" aria-hidden="true"></div>
+              <div class="hw-btn" style="position:absolute;top:160px;left:-3px;width:3px;height:45px;border-radius:3px 0 0 3px" aria-hidden="true"></div>
+              <div class="hw-btn" style="position:absolute;top:220px;left:-3px;width:3px;height:45px;border-radius:3px 0 0 3px" aria-hidden="true"></div>
+              <div class="hw-btn" style="position:absolute;top:170px;right:-3px;width:3px;height:70px;border-radius:0 3px 3px 0;transform:scaleX(-1)" aria-hidden="true"></div>
+
+              <!-- Screen -->
+              <div class="iphone-screen">
+                <div class="screen-glare" style="position:absolute;inset:0;z-index:40;pointer-events:none" aria-hidden="true"></div>
+                <div class="dynamic-island">
+                  <div class="di-dot" style="width:6px;height:6px;border-radius:9999px;background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.8)"></div>
+                </div>
+                <div class="app-content">
+                  <!-- Header -->
+                  <div class="app-header phone-widget">
+                    <div>
+                      <div style="font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:4px">Today</div>
+                      <div style="font-size:20px;font-weight:700;letter-spacing:-.02em">Journey</div>
+                    </div>
+                    <div class="app-avatar">JS</div>
+                  </div>
+
+                  <!-- Ring -->
+                  <div class="ring-wrap phone-widget">
+                    <svg style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
+                      <circle cx="88" cy="88" r="64" fill="none" stroke="rgba(255,255,255,.03)" stroke-width="12"/>
+                      <circle class="progress-ring" cx="88" cy="88" r="64" fill="none" stroke="#3b82f6" stroke-width="12"/>
+                    </svg>
+                    <div class="ring-center">
+                      <div class="counter-val">0</div>
+                      <div class="ring-label">Days Sober</div>
+                    </div>
+                  </div>
+
+                  <!-- Widgets -->
+                  <div class="widgets">
+                    <div class="widget widget-depth phone-widget">
+                      <div class="widget-icon blue">
+                        <svg width="16" height="16" fill="none" stroke="#3b82f6" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                      </div>
+                      <div class="widget-lines">
+                        <div class="wl-top"></div>
+                        <div class="wl-bottom w1"></div>
+                      </div>
+                    </div>
+                    <div class="widget widget-depth phone-widget">
+                      <div class="widget-icon green">
+                        <svg width="16" height="16" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                        </svg>
+                      </div>
+                      <div class="widget-lines">
+                        <div class="wl-top" style="width:64px"></div>
+                        <div class="wl-bottom w2"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="home-indicator"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Badge 1 -->
+            <div class="badge badge-1 floating-badge glass-badge">
+              <div class="badge-icon">🔥</div>
+              <div>
+                <div class="badge-title">1 Year Streak</div>
+                <div class="badge-sub">Milestone unlocked</div>
+              </div>
+            </div>
+
+            <!-- Badge 2 -->
+            <div class="badge badge-2 floating-badge glass-badge">
+              <div class="badge-icon">🤝</div>
+              <div>
+                <div class="badge-title">Sponsor Update</div>
+                <div class="badge-sub">Shared successfully</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Left text -->
+        <div class="left-text card-left-text gsap-reveal">
+          <h3>Accountability, redefined.</h3>
+          <p>
+            <strong style="color:#fff">Sobers</strong> empowers sponsors and sponsees in
+            12-step recovery programs with structured accountability, precise sobriety
+            tracking, and beautiful visual timelines.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacer so ScrollTrigger has room -->
+  <div style="height:7000px;pointer-events:none;position:absolute;top:0;left:0;width:1px" aria-hidden="true"></div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Mouse sheen + 3D tilt ──────────────────────────────────────────────────
+const card   = document.getElementById('main-card');
+const sheen  = document.getElementById('card-sheen');
+const phone  = document.getElementById('mockup-3d');
+let   rafId  = 0;
+
+window.addEventListener('mousemove', e => {
+  if (window.scrollY > window.innerHeight * 2) return;
+  cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(() => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top)  + 'px');
+    const xv = (e.clientX / window.innerWidth  - .5) * 2;
+    const yv = (e.clientY / window.innerHeight - .5) * 2;
+    gsap.to(phone, { rotationY: xv * 12, rotationX: -yv * 12, ease: 'power3.out', duration: 1.2 });
+  });
+});
+
+// ── Intro animation ────────────────────────────────────────────────────────
+gsap.set('.text-track', { autoAlpha: 0, y: 60, scale: .85, filter: 'blur(20px)', rotationX: -20 });
+gsap.set('.text-days',  { autoAlpha: 1, clipPath: 'inset(0 100% 0 0)' });
+gsap.set('#main-card',  { y: window.innerHeight + 200, autoAlpha: 1 });
+gsap.set(['.card-left-text','.card-right-text','.mockup-scroll-wrapper','.floating-badge','.phone-widget'], { autoAlpha: 0 });
+gsap.set('#cta-layer',  { autoAlpha: 0, scale: .8, filter: 'blur(30px)' });
+
+const intro = gsap.timeline({ delay: .3 });
+intro
+  .to('.text-track', { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationX: 0, ease: 'expo.out' })
+  .to('.text-days',  { duration: 1.4, clipPath: 'inset(0 0% 0 0)', ease: 'power4.inOut' }, '-=1.0');
+
+// ── Scroll timeline ────────────────────────────────────────────────────────
+const isMobile = window.innerWidth < 768;
+
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: '+=7000',
+    pin: true,
+    scrub: 1,
+    anticipatePin: 1,
+  }
+});
+
+tl
+  .to(['#hero-texts','#bg-grid'], { scale: 1.15, filter: 'blur(20px)', opacity: .2, ease: 'power2.inOut', duration: 2 }, 0)
+  .to('#main-card', { y: 0, ease: 'power3.inOut', duration: 2 }, 0)
+  .to('#main-card', { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 1.5 })
+  .fromTo('.mockup-scroll-wrapper',
+    { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: .6 },
+    { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 2.5 }, '-=0.8')
+  .fromTo('.phone-widget',
+    { y: 40, autoAlpha: 0, scale: .95 },
+    { y: 0, autoAlpha: 1, scale: 1, stagger: .15, ease: 'back.out(1.2)', duration: 1.5 }, '-=1.5')
+  .to('.progress-ring', { strokeDashoffset: 60, duration: 2, ease: 'power3.inOut' }, '-=1.2')
+  .to('.counter-val', { innerHTML: 365, snap: { innerHTML: 1 }, duration: 2, ease: 'expo.out' }, '-=2.0')
+  .fromTo('.floating-badge',
+    { y: 100, autoAlpha: 0, scale: .7, rotationZ: -10 },
+    { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.5, stagger: .2 }, '-=2.0')
+  .fromTo('.card-left-text',  { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.5 }, '-=1.5')
+  .fromTo('.card-right-text', { x: 50, autoAlpha: 0, scale: .8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.5 }, '<')
+  .to({}, { duration: 2.5 })
+  .set('#hero-texts', { autoAlpha: 0 })
+  .set('#cta-layer',  { autoAlpha: 1 })
+  .to({}, { duration: 1.5 })
+  .to(['.mockup-scroll-wrapper','.floating-badge','.card-left-text','.card-right-text'],
+      { scale: .9, y: -40, z: -200, autoAlpha: 0, ease: 'power3.in', duration: 1.2, stagger: .05 })
+  .to('#main-card', {
+      width: isMobile ? '92vw' : '85vw',
+      height: isMobile ? '92vh' : '85vh',
+      borderRadius: isMobile ? '32px' : '40px',
+      ease: 'expo.inOut', duration: 1.8 }, 'pullback')
+  .to('#cta-layer', { scale: 1, filter: 'blur(0px)', ease: 'expo.inOut', duration: 1.8 }, 'pullback')
+  .to('#main-card', { y: -(window.innerHeight + 300), ease: 'power3.in', duration: 1.5 });
+</script>
+</body>
+</html>
